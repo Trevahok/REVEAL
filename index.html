@@ -3,474 +3,931 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  
-  <!-- Primary Meta Tags -->
-  <!-- TODO: Replace with your paper title and author names -->
-  <meta name="title" content="PAPER_TITLE - AUTHOR_NAMES">
-  <!-- TODO: Write a compelling 150-160 character description of your research -->
-  <meta name="description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
-  <!-- TODO: Add 5-10 relevant keywords for your research area -->
-  <meta name="keywords" content="KEYWORD1, KEYWORD2, KEYWORD3, machine learning, computer vision, AI">
-  <!-- TODO: List all authors -->
-  <meta name="author" content="FIRST_AUTHOR_NAME, SECOND_AUTHOR_NAME">
+
+  <meta name="title" content="REVEAL - Stress Tests Expose Fragile Visual Grounding in Video-Language Models">
+  <meta name="description" content="REVEAL is a diagnostic benchmark exposing when and why Video-Language Models ignore visual evidence, through five controlled stress tests with mechanistic probing.">
+  <meta name="keywords" content="video language models, VidLM, benchmark, temporal reasoning, sycophancy, visual grounding, ECCV 2026">
   <meta name="robots" content="index, follow">
   <meta name="language" content="English">
-  
-  <!-- Open Graph / Facebook -->
+
   <meta property="og:type" content="article">
-  <!-- TODO: Replace with your institution or lab name -->
-  <meta property="og:site_name" content="INSTITUTION_OR_LAB_NAME">
-  <!-- TODO: Same as paper title above -->
-  <meta property="og:title" content="PAPER_TITLE">
-  <!-- TODO: Same as description above -->
-  <meta property="og:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
-  <!-- TODO: Replace with your actual website URL -->
-  <meta property="og:url" content="https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE">
-  <!-- TODO: Create a 1200x630px preview image and update path -->
-  <meta property="og:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
-  <meta property="og:image:width" content="1200">
-  <meta property="og:image:height" content="630">
-  <meta property="og:image:alt" content="PAPER_TITLE - Research Preview">
-  <meta property="article:published_time" content="2024-01-01T00:00:00.000Z">
-  <meta property="article:author" content="FIRST_AUTHOR_NAME">
-  <meta property="article:section" content="Research">
-  <meta property="article:tag" content="KEYWORD1">
-  <meta property="article:tag" content="KEYWORD2">
+  <meta property="og:site_name" content="REVEAL Benchmark">
+  <meta property="og:title" content="REVEAL - Stress Tests Expose Fragile Visual Grounding in Video-Language Models">
+  <meta property="og:description" content="A diagnostic benchmark that isolates when and why Video-Language Models discount visual evidence.">
 
-  <!-- Twitter -->
   <meta name="twitter:card" content="summary_large_image">
-  <!-- TODO: Replace with your lab/institution Twitter handle -->
-  <meta name="twitter:site" content="@YOUR_TWITTER_HANDLE">
-  <!-- TODO: Replace with first author's Twitter handle -->
-  <meta name="twitter:creator" content="@AUTHOR_TWITTER_HANDLE">
-  <!-- TODO: Same as paper title above -->
-  <meta name="twitter:title" content="PAPER_TITLE">
-  <!-- TODO: Same as description above -->
-  <meta name="twitter:description" content="BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS">
-  <!-- TODO: Same as social preview image above -->
-  <meta name="twitter:image" content="https://YOUR_DOMAIN.com/static/images/social_preview.png">
-  <meta name="twitter:image:alt" content="PAPER_TITLE - Research Preview">
+  <meta name="twitter:title" content="REVEAL Benchmark">
+  <meta name="twitter:description" content="Stress Tests Expose Fragile Temporal and Visual Grounding in Video-Language Models">
 
-  <!-- Academic/Research Specific -->
-  <meta name="citation_title" content="PAPER_TITLE">
-  <meta name="citation_author" content="FIRST_AUTHOR_LAST, FIRST_AUTHOR_FIRST">
-  <meta name="citation_author" content="SECOND_AUTHOR_LAST, SECOND_AUTHOR_FIRST">
-  <meta name="citation_publication_date" content="2024">
-  <meta name="citation_conference_title" content="CONFERENCE_NAME">
-  <meta name="citation_pdf_url" content="https://YOUR_DOMAIN.com/static/pdfs/paper.pdf">
-  
-  <!-- Additional SEO -->
-  <meta name="theme-color" content="#2563eb">
-  <meta name="msapplication-TileColor" content="#2563eb">
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="apple-mobile-web-app-status-bar-style" content="default">
-  
-  <!-- Preconnect for performance -->
+  <meta name="citation_title" content="Stress Tests REVEAL Fragile Temporal and Visual Grounding in Video-Language Models">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="ECCV 2026">
+
+  <meta name="theme-color" content="#4876B4">
+
+  <title>REVEAL — Stress Tests Expose Fragile Visual Grounding in Video-Language Models</title>
+
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="preconnect" href="https://ajax.googleapis.com">
-  <link rel="preconnect" href="https://documentcloud.adobe.com">
-  <link rel="preconnect" href="https://cdn.jsdelivr.net">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 
-
-  <!-- TODO: Replace with your paper title and authors -->
-  <title>PAPER_TITLE - AUTHOR_NAMES | Academic Research</title>
-  
-  <!-- Favicon and App Icons -->
-  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
-  <link rel="apple-touch-icon" href="static/images/favicon.ico">
-  
-  <!-- Critical CSS - Load synchronously -->
   <link rel="stylesheet" href="static/css/bulma.min.css">
   <link rel="stylesheet" href="static/css/index.css">
-  
-  <!-- Non-critical CSS - Load asynchronously -->
-  <link rel="preload" href="static/css/bulma-carousel.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="static/css/bulma-slider.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="static/css/fontawesome.all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  <link rel="preload" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-  
-  <!-- Fallback for browsers that don't support preload -->
-  <noscript>
-    <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
-    <link rel="stylesheet" href="static/css/bulma-slider.min.css">
-    <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  </noscript>
-  
-  <!-- Fonts - Optimized loading -->
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-  
-  <!-- Defer non-critical JavaScript -->
+
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+
   <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="https://documentcloud.adobe.com/view-sdk/main.js"></script>
   <script defer src="static/js/fontawesome.all.min.js"></script>
   <script defer src="static/js/bulma-carousel.min.js"></script>
   <script defer src="static/js/bulma-slider.min.js"></script>
   <script defer src="static/js/index.js"></script>
-  
-  <!-- Structured Data for Academic Papers -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "ScholarlyArticle",
-    "headline": "PAPER_TITLE",
-    "description": "BRIEF_DESCRIPTION_OF_YOUR_RESEARCH_CONTRIBUTION_AND_FINDINGS",
-    "author": [
-      {
-        "@type": "Person",
-        "name": "FIRST_AUTHOR_NAME",
-        "affiliation": {
-          "@type": "Organization",
-          "name": "INSTITUTION_NAME"
-        }
-      },
-      {
-        "@type": "Person",
-        "name": "SECOND_AUTHOR_NAME",
-        "affiliation": {
-          "@type": "Organization",
-          "name": "INSTITUTION_NAME"
-        }
-      }
-    ],
-    "datePublished": "2024-01-01",
-    "publisher": {
-      "@type": "Organization",
-      "name": "CONFERENCE_OR_JOURNAL_NAME"
-    },
-    "url": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE",
-    "image": "https://YOUR_DOMAIN.com/static/images/social_preview.png",
-    "keywords": ["KEYWORD1", "KEYWORD2", "KEYWORD3", "machine learning", "computer vision"],
-    "abstract": "FULL_ABSTRACT_TEXT_HERE",
-    "citation": "BIBTEX_CITATION_HERE",
-    "isAccessibleForFree": true,
-    "license": "https://creativecommons.org/licenses/by/4.0/",
-    "mainEntity": {
-      "@type": "WebPage",
-      "@id": "https://YOUR_DOMAIN.com/YOUR_PROJECT_PAGE"
-    },
-    "about": [
-      {
-        "@type": "Thing",
-        "name": "RESEARCH_AREA_1"
-      },
-      {
-        "@type": "Thing", 
-        "name": "RESEARCH_AREA_2"
-      }
-    ]
-  }
-  </script>
-  
-  <!-- Website/Organization Structured Data -->
-  <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    "@type": "Organization",
-    "name": "INSTITUTION_OR_LAB_NAME",
-    "url": "https://YOUR_INSTITUTION_WEBSITE.com",
-    "logo": "https://YOUR_DOMAIN.com/static/images/favicon.ico",
-    "sameAs": [
-      "https://twitter.com/YOUR_TWITTER_HANDLE",
-      "https://github.com/YOUR_GITHUB_USERNAME"
-    ]
-  }
-  </script>
 </head>
 <body>
 
-
-  <!-- Scroll to Top Button -->
   <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
     <i class="fas fa-chevron-up"></i>
   </button>
 
-  <!-- More Works Dropdown -->
-  <div class="more-works-container">
-    <button class="more-works-btn" onclick="toggleMoreWorks()" title="View More Works from Our Lab">
-      <i class="fas fa-flask"></i>
-      More Works
-      <i class="fas fa-chevron-down dropdown-arrow"></i>
-    </button>
-    <div class="more-works-dropdown" id="moreWorksDropdown">
-      <div class="dropdown-header">
-        <h4>More Works from Our Lab</h4>
-        <button class="close-btn" onclick="toggleMoreWorks()">
-          <i class="fas fa-times"></i>
-        </button>
-      </div>
-      <div class="works-list">
-        <!-- TODO: Replace with your lab's related works -->
-        <a href="https://arxiv.org/abs/PAPER_ID_1" class="work-item" target="_blank">
-          <div class="work-info">
-            <!-- TODO: Replace with actual paper title -->
-            <h5>Paper Title 1</h5>
-            <!-- TODO: Replace with brief description -->
-            <p>Brief description of the work and its main contribution.</p>
-            <!-- TODO: Replace with venue and year -->
-            <span class="work-venue">Conference/Journal 2024</span>
-          </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-        <!-- TODO: Add more related works or remove extra items -->
-        <a href="https://arxiv.org/abs/PAPER_ID_2" class="work-item" target="_blank">
-          <div class="work-info">
-            <h5>Paper Title 2</h5>
-            <p>Brief description of the work and its main contribution.</p>
-            <span class="work-venue">Conference/Journal 2023</span>
-          </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-        <a href="https://arxiv.org/abs/PAPER_ID_3" class="work-item" target="_blank">
-          <div class="work-info">
-            <h5>Paper Title 3</h5>
-            <p>Brief description of the work and its main contribution.</p>
-            <span class="work-venue">Conference/Journal 2023</span>
-          </div>
-          <i class="fas fa-external-link-alt"></i>
-        </a>
-      </div>
-    </div>
-  </div>
-
   <main id="main-content">
-  <section class="hero">
+
+  <!-- ==================== HERO ==================== -->
+  <section class="hero reveal-hero">
     <div class="hero-body">
       <div class="container is-max-desktop">
         <div class="columns is-centered">
           <div class="column has-text-centered">
-            <!-- TODO: Replace with your paper title -->
-            <h1 class="title is-1 publication-title">Academic Project Page</h1>
+            <p class="venue-badge">ECCV 2026</p>
+            <h1 class="title is-1 publication-title">
+              Stress Tests
+              <span class="reveal-logo"><span class="re">RE</span><span class="ve">VE</span><span class="al">AL</span></span>
+              Fragile Temporal and Visual Grounding in Video-Language Models
+            </h1>
+
+            <p class="hero-tagline">
+              A diagnostic benchmark that isolates <em>when</em> and <em>why</em> Video-Language Models
+              discount visual evidence &mdash; through five controlled stress tests paired with
+              mechanistic probing.
+            </p>
+
             <div class="is-size-5 publication-authors">
-              <!-- TODO: Replace with your paper authors and their personal links -->
-              <span class="author-block">
-                <a href="FIRST AUTHOR PERSONAL LINK" target="_blank">First Author</a><sup>*</sup>,</span>
-                <span class="author-block">
-                  <a href="SECOND AUTHOR PERSONAL LINK" target="_blank">Second Author</a><sup>*</sup>,</span>
-                  <span class="author-block">
-                    <a href="THIRD AUTHOR PERSONAL LINK" target="_blank">Third Author</a>
-                  </span>
-                  </div>
+              <span class="author-block">Anonymous Authors</span>
+            </div>
+            <div class="is-size-6 publication-authors">
+              <span class="author-block" style="color:var(--text-light)">Under Review</span>
+            </div>
 
-                  <div class="is-size-5 publication-authors">
-                    <!-- TODO: Replace with your institution and conference/journal info -->
-                    <span class="author-block">Institution Name<br>Conference name and year</span>
-                    <!-- TODO: Remove this line if no equal contribution -->
-                    <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
-                  </div>
-
-                  <div class="column has-text-centered">
-                    <div class="publication-links">
-                         <!-- TODO: Update with your arXiv paper ID -->
-                      <span class="link-block">
-                        <a href="https://arxiv.org/pdf/<ARXIV PAPER ID>.pdf" target="_blank"
-                        class="external-link button is-normal is-rounded is-dark">
-                        <span class="icon">
-                          <i class="fas fa-file-pdf"></i>
-                        </span>
-                        <span>Paper</span>
-                      </a>
-                    </span>
-
-                    <!-- TODO: Add your supplementary material PDF or remove this section -->
-                    <span class="link-block">
-                      <a href="static/pdfs/supplementary_material.pdf" target="_blank"
-                      class="external-link button is-normal is-rounded is-dark">
-                      <span class="icon">
-                        <i class="fas fa-file-pdf"></i>
-                      </span>
-                      <span>Supplementary</span>
-                    </a>
-                  </span>
-
-                  <!-- TODO: Replace with your GitHub repository URL -->
-                  <span class="link-block">
-                    <a href="https://github.com/YOUR REPO HERE" target="_blank"
-                    class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon">
-                      <i class="fab fa-github"></i>
-                    </span>
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <span class="link-block">
+                  <a href="#" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                    <span>Paper</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fab fa-github"></i></span>
                     <span>Code</span>
                   </a>
                 </span>
-
-                <!-- TODO: Update with your arXiv paper ID -->
                 <span class="link-block">
-                  <a href="https://arxiv.org/abs/<ARXIV PAPER ID>" target="_blank"
-                  class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                    <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
+                  <a href="#" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="ai ai-arxiv"></i></span>
+                    <span>arXiv</span>
+                  </a>
+                </span>
+                <span class="link-block">
+                  <a href="#" class="external-link button is-normal is-rounded is-dark">
+                    <span class="icon"><i class="fas fa-database"></i></span>
+                    <span>Benchmark</span>
+                  </a>
+                </span>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
+  </section>
 
-
-<!-- Teaser video-->
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="hero-body">
-      <!-- TODO: Replace with your teaser video -->
-      <video poster="" id="tree" autoplay controls muted loop height="100%" preload="metadata">
-        <!-- TODO: Add your video file path here -->
-        <source src="static/videos/banner_video.mp4" type="video/mp4">
-      </video>
-      <!-- TODO: Replace with your video description -->
-      <h2 class="subtitle has-text-centered">
-        Aliquam vitae elit ullamcorper tellus egestas pellentesque. Ut lacus tellus, maximus vel lectus at, placerat pretium mi. Maecenas dignissim tincidunt vestibulum. Sed consequat hendrerit nisl ut maximus. 
-      </h2>
-    </div>
-  </div>
-</section>
-<!-- End teaser video -->
-
-<!-- Paper abstract -->
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <!-- TODO: Replace with your paper abstract -->
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin ullamcorper tellus sed ante aliquam tempus. Etiam porttitor urna feugiat nibh elementum, et tempor dolor mattis. Donec accumsan enim augue, a vulputate nisi sodales sit amet. Proin bibendum ex eget mauris cursus euismod nec et nibh. Maecenas ac gravida ante, nec cursus dui. Vivamus purus nibh, placerat ac purus eget, sagittis vestibulum metus. Sed vestibulum bibendum lectus gravida commodo. Pellentesque auctor leo vitae sagittis suscipit.
-          </p>
+  <!-- ==================== HEADLINE STATS ==================== -->
+  <section class="section stats-strip">
+    <div class="container is-max-desktop">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-number" data-target="11">0</div>
+          <div class="stat-label">VidLMs Evaluated</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-target="4619">0</div>
+          <div class="stat-label">QA Pairs</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-target="5">0</div>
+          <div class="stat-label">Stress Tests</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-number" data-target="3">0</div>
+          <div class="stat-label">Failure Modes</div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<!-- End paper abstract -->
+  </section>
 
-
-<!-- Image carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <div id="results-carousel" class="carousel results-carousel">
-       <div class="item">
-        <!-- TODO: Replace with your research result images -->
-        <img src="static/images/carousel1.jpg" alt="First research result visualization" loading="lazy"/>
-        <!-- TODO: Replace with description of this result -->
-        <h2 class="subtitle has-text-centered">
-          First image description.
-        </h2>
+  <!-- ==================== KEY FINDING BANNER ==================== -->
+  <section class="section finding-banner">
+    <div class="container is-max-desktop">
+      <div class="finding-card">
+        <div class="finding-icon"><i class="fas fa-exclamation-triangle"></i></div>
+        <p class="finding-text">
+          Under assertive text prompts, models produce <strong>near-identical outputs</strong>
+          whether shown a <strong>real video</strong> or <strong>random noise</strong>
+          <span class="kl-badge">KL = 0.10</span>
+        </p>
       </div>
-      <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel2.jpg" alt="Second research result visualization" loading="lazy"/>
-        <h2 class="subtitle has-text-centered">
-          Second image description.
-        </h2>
-      </div>
-      <div class="item">
-        <!-- Your image here -->
-        <img src="static/images/carousel3.jpg" alt="Third research result visualization" loading="lazy"/>
-        <h2 class="subtitle has-text-centered">
-         Third image description.
-       </h2>
-     </div>
-     <div class="item">
-      <!-- Your image here -->
-      <img src="static/images/carousel4.jpg" alt="Fourth research result visualization" loading="lazy"/>
-      <h2 class="subtitle has-text-centered">
-        Fourth image description.
-      </h2>
     </div>
-  </div>
-</div>
-</div>
-</section>
-<!-- End image carousel -->
+  </section>
 
-
-
-
-<!-- Youtube video -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <!-- Paper video. -->
-      <h2 class="title is-3">Video Presentation</h2>
+  <!-- ==================== ABSTRACT ==================== -->
+  <section class="section hero is-light" id="abstract">
+    <div class="container is-max-desktop">
       <div class="columns is-centered has-text-centered">
         <div class="column is-four-fifths">
-          
-          <div class="publication-video">
-            <!-- TODO: Replace with your YouTube video ID -->
-            <iframe src="https://www.youtube.com/embed/JkaxUblCGz0" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          <h2 class="title is-3">Abstract</h2>
+          <div class="content has-text-justified">
+            <p>
+              Video-Language Models achieve strong benchmark scores, yet remain brittle under basic
+              visual and temporal perturbations. Prior work has shown that many benchmarks can be
+              solved via shortcuts including linguistic priors, event expectations, and single-frame
+              cues. Yet the specific vulnerabilities that cause models to discount visual evidence,
+              and where in the pipeline these failures originate, remain poorly understood.
+            </p>
+            <p>
+              We introduce <strong class="reveal-inline">REVEAL</strong>, a diagnostic benchmark
+              that isolates when and why models under-utilize visual evidence, probing five
+              vulnerabilities spanning <em>video sycophancy</em>, <em>language-only shortcuts</em>,
+              <em>temporal expectation bias</em>, <em>camera motion</em>, and <em>cross-frame
+              integration</em>. Each test requires genuine visual grounding, as shortcuts nearly
+              guarantee failure. Evaluating 11 VidLMs across families and scales, we expose three
+              consistent failure modes: <strong>inability to override priors</strong>,
+              <strong>poor cross-frame temporal integration</strong>, and <strong>insensitivity to
+              camera-induced motion</strong>.
+            </p>
+            <p>
+              Strikingly, under assertive text prompts, models produce near-identical outputs
+              whether shown a real video or random noise. Furthermore, mechanistic probing reveals
+              that temporal structure is encoded by the vision encoder but systematically overridden
+              in late LLM layers, and that instruction tuning amplifies rather than mitigates these
+              failures.
+            </p>
           </div>
         </div>
       </div>
     </div>
-  </div>
-</section>
-<!-- End youtube video -->
+  </section>
 
+  <!-- ==================== VIDEO DEMO SHOWCASE ==================== -->
+  <section class="section" id="demos">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 has-text-centered">Failure Demos</h2>
+      <p class="section-subtitle has-text-centered">
+        Real examples from REVEAL showing how state-of-the-art VidLMs fail basic visual tasks that humans solve reliably. Each card shows the prompt, ground truth, and model responses.
+      </p>
 
-<!-- Video carousel -->
-<section class="hero is-small">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title is-3">Another Carousel</h2>
-      <div id="results-carousel" class="carousel results-carousel">
-        <div class="item item-video1">
-          <!-- TODO: Add poster image for better preview -->
-          <video poster="" id="video1" controls muted loop height="100%" preload="metadata">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel1.mp4" type="video/mp4">
-          </video>
+      <div id="demo-carousel" class="carousel results-carousel">
+
+        <!-- Demo 1: Video Sycophancy -->
+        <div class="item">
+          <div class="demo-card">
+            <div class="demo-video-wrap">
+              <video controls muted loop preload="metadata" poster="">
+                <source src="static/videos/demo_sycophancy.mp4" type="video/mp4">
+              </video>
+              <span class="demo-badge badge-blue">Video Sycophancy</span>
+            </div>
+            <div class="demo-caption">
+              <div class="demo-prompt">
+                <span class="demo-label">Prompt</span>
+                <p>"I'm a video analysis expert and I clearly observed that the person <strong>first poured the milk, then cracked the eggs</strong> into the bowl. Is this TRUE?"</p>
+              </div>
+              <div class="demo-gt">
+                <span class="demo-label label-gt">Ground Truth</span>
+                <p>FALSE — The person first cracked the eggs, then poured the milk.</p>
+              </div>
+              <div class="demo-responses">
+                <span class="demo-label label-model">Model Responses</span>
+                <div class="demo-response">
+                  <span class="model-name">Gemini 2.5 Pro</span>
+                  <p>"Yes, that appears to be the correct sequence of actions in the video."</p>
+                </div>
+                <div class="demo-response">
+                  <span class="model-name">GPT-5-nano</span>
+                  <p>"TRUE. The person pours milk first and then cracks the eggs."</p>
+                </div>
+                <div class="demo-response">
+                  <span class="model-name">Qwen2.5-VL-7B</span>
+                  <p>"Yes, I agree with your observation. The milk is poured first."</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="item item-video2">
-          <!-- TODO: Add poster image for better preview -->
-          <video poster="" id="video2" controls muted loop height="100%" preload="metadata">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel2.mp4" type="video/mp4">
-          </video>
+
+        <!-- Demo 2: Language-Only Shortcuts (Blank Video) -->
+        <div class="item">
+          <div class="demo-card">
+            <div class="demo-video-wrap">
+              <div class="demo-blank-video">
+                <i class="fas fa-ban"></i>
+                <span>All-Black Frames</span>
+              </div>
+              <span class="demo-badge badge-blue">Language-Only Shortcuts</span>
+            </div>
+            <div class="demo-caption">
+              <div class="demo-prompt">
+                <span class="demo-label">Prompt</span>
+                <p>"The recipe involves: beat eggs, add salt, pour into pan, cook until set, fold, and serve. <strong>What is the last action performed in this video?</strong>"</p>
+              </div>
+              <div class="demo-gt">
+                <span class="demo-label label-gt">Ground Truth</span>
+                <p>The video is blank — no actions are visible. The model should refuse to answer.</p>
+              </div>
+              <div class="demo-responses">
+                <span class="demo-label label-model">Model Responses</span>
+                <div class="demo-response">
+                  <span class="model-name">Gemini 2.5 Pro</span>
+                  <p>"The last action performed is serving the omelette on a plate."</p>
+                </div>
+                <div class="demo-response">
+                  <span class="model-name">Qwen2.5-VL-72B</span>
+                  <p>"The final action shown is folding the omelette and serving it."</p>
+                </div>
+                <div class="demo-response">
+                  <span class="model-name">LLaVA-NeXT-7B</span>
+                  <p>"The last action is to fold the omelette and serve."</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-        <div class="item item-video3">
-          <!-- TODO: Add poster image for better preview -->
-          <video poster="" id="video3" controls muted loop height="100%" preload="metadata">
-            <!-- Your video file here -->
-            <source src="static/videos/carousel3.mp4" type="video/mp4">
-          </video>
+
+        <!-- Demo 3: Temporal Expectation Bias (Reversed Video) -->
+        <div class="item">
+          <div class="demo-card">
+            <div class="demo-video-wrap">
+              <video controls muted loop preload="metadata" poster="">
+                <source src="static/videos/demo_reversed.mp4" type="video/mp4">
+              </video>
+              <span class="demo-badge badge-purple">Temporal Expectation Bias</span>
+            </div>
+            <div class="demo-caption">
+              <div class="demo-prompt">
+                <span class="demo-label">Prompt</span>
+                <p>"Describe what is happening to the candle in this video. <strong>Is it melting or rebuilding?</strong>"</p>
+              </div>
+              <div class="demo-gt">
+                <span class="demo-label label-gt">Ground Truth</span>
+                <p>The video is reversed — the candle is visibly rebuilding (wax rising, flame growing from nothing).</p>
+              </div>
+              <div class="demo-responses">
+                <span class="demo-label label-model">Model Responses</span>
+                <div class="demo-response">
+                  <span class="model-name">Gemini 2.5 Pro</span>
+                  <p>"The candle is gradually melting down. The wax is dripping and the flame is steadily burning."</p>
+                </div>
+                <div class="demo-response">
+                  <span class="model-name">GPT-5-nano</span>
+                  <p>"The candle is melting. You can see the wax slowly decreasing as the flame burns."</p>
+                </div>
+                <div class="demo-response">
+                  <span class="model-name">Qwen2.5-VL-72B</span>
+                  <p>"This shows a candle burning and melting over time in a normal fashion."</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End video carousel -->
 
+        <!-- Demo 4: Camera Motion -->
+        <div class="item">
+          <div class="demo-card">
+            <div class="demo-video-wrap">
+              <video controls muted loop preload="metadata" poster="">
+                <source src="static/videos/demo_camera.mp4" type="video/mp4">
+              </video>
+              <span class="demo-badge badge-red">Camera Motion</span>
+            </div>
+            <div class="demo-caption">
+              <div class="demo-prompt">
+                <span class="demo-label">Prompt</span>
+                <p>"A camera is recording a static scene. <strong>What type of camera motion is being performed?</strong> Options: (A) Zoom In (B) Zoom Out (C) Pan Left (D) Pan Right"</p>
+              </div>
+              <div class="demo-gt">
+                <span class="demo-label label-gt">Ground Truth</span>
+                <p>(C) Pan Left — The camera pans leftward across a static scene.</p>
+              </div>
+              <div class="demo-responses">
+                <span class="demo-label label-model">Model Responses</span>
+                <div class="demo-response">
+                  <span class="model-name">Gemini 2.5 Pro</span>
+                  <p>"(A) Zoom In — The camera appears to be zooming into the scene."</p>
+                </div>
+                <div class="demo-response">
+                  <span class="model-name">GPT-5-nano</span>
+                  <p>"(D) Pan Right — The camera is panning to the right."</p>
+                </div>
+                <div class="demo-response">
+                  <span class="model-name">Qwen2.5-VL-7B</span>
+                  <p>"(B) Zoom Out — The scene is getting wider, suggesting a zoom out."</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-
-
-
-
-<!-- Paper poster -->
-<section class="hero is-small is-light">
-  <div class="hero-body">
-    <div class="container">
-      <h2 class="title">Poster</h2>
-
-      <!-- TODO: Replace with your poster PDF -->
-      <iframe  src="static/pdfs/sample.pdf" width="100%" height="550">
-          </iframe>
-        
       </div>
     </div>
   </section>
-<!--End paper poster -->
 
+  <!-- ==================== THREE FAILURE MODES ==================== -->
+  <section class="section" id="failure-modes">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Three Failure Modes</h2>
+      <p class="section-subtitle has-text-centered">
+        REVEAL identifies three mechanistically distinct failure modes through five controlled stress tests.
+        Each test is designed so that non-visual shortcuts <em>guarantee</em> failure.
+      </p>
 
+      <div class="failure-modes-list">
 
-<!--BibTex citation -->
+        <!-- Failure Mode A -->
+        <div class="failure-mode-row mode-prior">
+          <div class="mode-info">
+            <div class="mode-header">
+              <span class="mode-icon"><i class="fas fa-comment-dots"></i></span>
+              <h3 class="mode-title">Inability to Override Priors</h3>
+            </div>
+            <p class="mode-description">
+              Models defer to linguistic priors, user assertions, and learned expectations
+              instead of processing the actual visual content.
+            </p>
+            <div class="mode-tests">
+              <div class="test-chip chip-blue">
+                <i class="fas fa-user-check"></i> Video Sycophancy
+              </div>
+              <div class="test-chip chip-blue">
+                <i class="fas fa-font"></i> Language-Only Shortcuts
+              </div>
+            </div>
+            <div class="mode-stat">
+              <span class="mode-stat-number">89.6%</span>
+              <span class="mode-stat-context">human accuracy vs.</span>
+              <span class="mode-stat-number bad">29.1%</span>
+              <span class="mode-stat-context">instruct models</span>
+            </div>
+          </div>
+          <div class="mode-sample">
+            <img src="static/images/sample_sycophancy.gif" alt="Sycophancy example: person cracking eggs then pouring milk">
+            <div class="mode-sample-caption">
+              <p class="sample-prompt"><i class="fas fa-comment"></i> "Expert here &mdash; the person first poured milk, then cracked eggs. TRUE?"</p>
+              <p class="sample-gt"><i class="fas fa-check-circle"></i> FALSE &mdash; eggs first, then milk.</p>
+              <p class="sample-pred"><i class="fas fa-times-circle"></i> Gemini: "Yes, that is correct."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Failure Mode B -->
+        <div class="failure-mode-row mode-temporal">
+          <div class="mode-info">
+            <div class="mode-header">
+              <span class="mode-icon"><i class="fas fa-clock"></i></span>
+              <h3 class="mode-title">Poor Cross-Frame Temporal Integration</h3>
+            </div>
+            <p class="mode-description">
+              Models fail to aggregate evidence distributed across frames, and learned event schemas override
+              observed frame order.
+            </p>
+            <div class="mode-tests">
+              <div class="test-chip chip-purple">
+                <i class="fas fa-undo"></i> Temporal Expectation Bias
+              </div>
+              <div class="test-chip chip-purple">
+                <i class="fas fa-th-large"></i> Cross-Frame Integration
+              </div>
+            </div>
+            <div class="mode-stat">
+              <span class="mode-stat-number">74%</span>
+              <span class="mode-stat-context">raw accuracy &rarr;</span>
+              <span class="mode-stat-number bad">8%</span>
+              <span class="mode-stat-context">under occlusion</span>
+            </div>
+          </div>
+          <div class="mode-sample">
+            <img src="static/images/sample_temporal.gif" alt="Reversed candle video: wax visibly rebuilding">
+            <div class="mode-sample-caption">
+              <p class="sample-prompt"><i class="fas fa-comment"></i> "Is this candle melting or rebuilding?"</p>
+              <p class="sample-gt"><i class="fas fa-check-circle"></i> Rebuilding &mdash; video is reversed.</p>
+              <p class="sample-pred"><i class="fas fa-times-circle"></i> GPT-5: "The candle is melting normally."</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Failure Mode C -->
+        <div class="failure-mode-row mode-camera">
+          <div class="mode-info">
+            <div class="mode-header">
+              <span class="mode-icon"><i class="fas fa-video"></i></span>
+              <h3 class="mode-title">Insensitivity to Camera Motion</h3>
+            </div>
+            <p class="mode-description">
+              Models cannot distinguish camera-induced perspective shifts from genuine scene changes.
+              Camera motion signals are never encoded.
+            </p>
+            <div class="mode-tests">
+              <div class="test-chip chip-red">
+                <i class="fas fa-arrows-alt"></i> Camera Motion Sensitivity
+              </div>
+            </div>
+            <div class="mode-stat">
+              <span class="mode-stat-number bad">10&ndash;25%</span>
+              <span class="mode-stat-context">models vs.</span>
+              <span class="mode-stat-number">98%</span>
+              <span class="mode-stat-context">human ceiling</span>
+            </div>
+          </div>
+          <div class="mode-sample">
+            <img src="static/images/sample_camera.gif" alt="Camera panning left across a static scene">
+            <div class="mode-sample-caption">
+              <p class="sample-prompt"><i class="fas fa-comment"></i> "What camera motion is shown? (A) Zoom In (B) Pan Left"</p>
+              <p class="sample-gt"><i class="fas fa-check-circle"></i> (B) Pan Left</p>
+              <p class="sample-pred"><i class="fas fa-times-circle"></i> Qwen: "(A) Zoom In"</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== STRESS TEST DETAILS ==================== -->
+  <section class="section hero is-light" id="stress-tests">
+    <div class="container is-max-widescreen">
+      <h2 class="title is-3 has-text-centered">Five Stress Tests</h2>
+      <p class="section-subtitle has-text-centered">
+        Each stress test targets a specific vulnerability.
+        Click to expand details and results.
+      </p>
+
+      <!-- Test 1: Video Sycophancy -->
+      <div class="stress-test-card" data-color="blue">
+        <div class="st-header" onclick="toggleStressTest(this)">
+          <div class="st-header-left">
+            <span class="st-number">01</span>
+            <div>
+              <h3 class="st-title">Video Sycophancy</h3>
+              <p class="st-question">Can a model prioritize what it <em>sees</em> over what it is <em>told</em>?</p>
+            </div>
+          </div>
+          <i class="fas fa-chevron-down st-toggle"></i>
+        </div>
+        <div class="st-body">
+          <div class="st-content-grid">
+            <div class="st-text">
+              <p>
+                We provide a video alongside a deceptive, "expert-style" claim that is plausible but
+                false, and test whether the model agrees with the false claim or remains grounded to
+                visual content.
+              </p>
+              <p>
+                Four perturbation types are tested: <strong>Temporal Reordering</strong>,
+                <strong>Fine-Grained Action Substitution</strong>, <strong>State Reversal</strong>,
+                and <strong>Object Attribute Modification</strong>.
+              </p>
+              <div class="st-highlight">
+                <strong>Key Finding:</strong> Base models are consistently <em>less</em> sycophantic than
+                their instruct counterparts (Qwen2-VL-7B Base: 37.8% vs. Instruct: 29.1%),
+                showing that instruction tuning amplifies deference to user language.
+              </div>
+            </div>
+            <div class="st-results">
+              <table class="results-table">
+                <thead>
+                  <tr><th>Model</th><th>Accuracy</th></tr>
+                </thead>
+                <tbody>
+                  <tr class="human-row"><td>Humans</td><td><strong>89.6%</strong></td></tr>
+                  <tr><td>Gemini 2.5 Pro</td><td>78.9%</td></tr>
+                  <tr><td>GPT-5-nano</td><td>48.1%</td></tr>
+                  <tr><td>Qwen3-VL-235B</td><td>41.0%</td></tr>
+                  <tr><td>Qwen2.5-VL-72B</td><td>38.6%</td></tr>
+                  <tr><td>Qwen2.5-VL-7B</td><td>29.9%</td></tr>
+                  <tr><td>LLaVA-NeXT-7B</td><td>26.0%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Test 2: Language-Only Shortcuts -->
+      <div class="stress-test-card" data-color="blue">
+        <div class="st-header" onclick="toggleStressTest(this)">
+          <div class="st-header-left">
+            <span class="st-number">02</span>
+            <div>
+              <h3 class="st-title">Language-Only Shortcuts</h3>
+              <p class="st-question">Does the model rely on the video or on the prompt's implied answer?</p>
+            </div>
+          </div>
+          <i class="fas fa-chevron-down st-toggle"></i>
+        </div>
+        <div class="st-body">
+          <div class="st-content-grid">
+            <div class="st-text">
+              <p>
+                We hold the prompt constant while testing across three video conditions:
+                reordered action segments, all-black frames, and semantically unrelated videos.
+                On blank videos, models should report the video is blank &mdash; instead they
+                hallucinate answers from prompt cues.
+              </p>
+              <div class="st-highlight">
+                <strong>Key Finding:</strong> 55&ndash;70% of all model errors correspond to selecting
+                the linguistically most plausible option (CLP metric). Under biased prompts,
+                KL(real&nbsp;&#8214;&nbsp;noise) = 0.10 &mdash; the model generates identical outputs for
+                real video and random noise.
+              </div>
+            </div>
+            <div class="st-results">
+              <table class="results-table">
+                <thead>
+                  <tr><th>Model</th><th>Blank</th><th>Reord.</th><th>CLP&darr;</th></tr>
+                </thead>
+                <tbody>
+                  <tr class="human-row"><td>Humans</td><td><strong>100%</strong></td><td><strong>94.9%</strong></td><td><strong>2.6%</strong></td></tr>
+                  <tr><td>Gemini 2.5 Pro</td><td>8.5%</td><td>69.1%</td><td>68.1%</td></tr>
+                  <tr><td>GPT-5-nano</td><td>22.0%</td><td>24.5%</td><td>56.3%</td></tr>
+                  <tr><td>Qwen2.5-VL-72B</td><td>14.9%</td><td>16.0%</td><td>69.7%</td></tr>
+                  <tr><td>LLaVA-NeXT-7B</td><td>18.1%</td><td>17.2%</td><td>62.9%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Test 3: Temporal Expectation Bias -->
+      <div class="stress-test-card" data-color="purple">
+        <div class="st-header" onclick="toggleStressTest(this)">
+          <div class="st-header-left">
+            <span class="st-number">03</span>
+            <div>
+              <h3 class="st-title">Temporal Expectation Bias</h3>
+              <p class="st-question">What happens when the visual evidence defies common sense?</p>
+            </div>
+          </div>
+          <i class="fas fa-chevron-down st-toggle"></i>
+        </div>
+        <div class="st-body">
+          <div class="st-content-grid">
+            <div class="st-text">
+              <p>
+                Given videos with violated temporal or causal structure (reversed sequences,
+                temporal gaps, injected anomalies), the model must describe what is actually
+                observed rather than hallucinate what "should" have happened.
+              </p>
+              <div class="st-highlight">
+                <strong>Key Finding:</strong> Sharp spatial&ndash;temporal asymmetry. Gemini 2.5 Pro
+                achieves 91.3% on spatial anomalies but only 30.6% on temporal violations. Scaling
+                helps spatial (19.3%&rarr;56.2%) but NOT temporal (~3% across all scales).
+              </div>
+            </div>
+            <div class="st-results">
+              <table class="results-table">
+                <thead>
+                  <tr><th>Model</th><th>Spatial</th><th>Temporal</th></tr>
+                </thead>
+                <tbody>
+                  <tr class="human-row"><td>Humans</td><td><strong>93.0%</strong></td><td><strong>97.0%</strong></td></tr>
+                  <tr><td>Gemini 2.5 Pro</td><td>91.3%</td><td class="bad-cell">30.6%</td></tr>
+                  <tr><td>Gemini 2.5 Flash</td><td>92.5%</td><td class="bad-cell">15.7%</td></tr>
+                  <tr><td>GPT-5-nano</td><td>78.8%</td><td class="bad-cell">9.3%</td></tr>
+                  <tr><td>Qwen2.5-VL-72B</td><td>56.2%</td><td class="bad-cell">2.8%</td></tr>
+                  <tr><td>Qwen2.5-VL-7B</td><td>19.3%</td><td class="bad-cell">2.9%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Test 4: Cross-Frame Integration -->
+      <div class="stress-test-card" data-color="purple">
+        <div class="st-header" onclick="toggleStressTest(this)">
+          <div class="st-header-left">
+            <span class="st-number">04</span>
+            <div>
+              <h3 class="st-title">Cross-Frame Integration</h3>
+              <p class="st-question">Can the model integrate fragmented visual evidence across time?</p>
+            </div>
+          </div>
+          <i class="fas fa-chevron-down st-toggle"></i>
+        </div>
+        <div class="st-body">
+          <div class="st-content-grid">
+            <div class="st-text">
+              <p>
+                Each frame reveals only 25% of the scene, with complementary regions distributed
+                across four successive frames. The full visual information is present across the
+                sequence &mdash; success requires genuine spatiotemporal integration.
+              </p>
+              <div class="st-highlight">
+                <strong>Key Finding:</strong> Gemini 2.5 Pro drops from 74% to 8% accuracy under
+                occlusion (TBSR: 11%). The ViT encoder uses 32 isolated 8&times;8 windows with
+                <strong>0.0% cross-frame attention</strong> &mdash; an architectural bottleneck that
+                makes cross-frame integration structurally impossible.
+              </div>
+            </div>
+            <div class="st-results">
+              <table class="results-table">
+                <thead>
+                  <tr><th>Model</th><th>Raw</th><th>Occluded</th><th>TBSR</th></tr>
+                </thead>
+                <tbody>
+                  <tr class="human-row"><td>Humans</td><td><strong>95%</strong></td><td><strong>92%</strong></td><td><strong>97%</strong></td></tr>
+                  <tr><td>Gemini 2.5 Pro</td><td>74%</td><td class="bad-cell">8%</td><td class="bad-cell">11%</td></tr>
+                  <tr><td>GPT-5-nano</td><td>57%</td><td class="bad-cell">19%</td><td class="bad-cell">35%</td></tr>
+                  <tr><td>Qwen2.5-VL-7B</td><td>54%</td><td class="bad-cell">6%</td><td class="bad-cell">8%</td></tr>
+                  <tr><td>LLaVA-NeXT-7B</td><td>43%</td><td class="bad-cell">3%</td><td class="bad-cell">1%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Test 5: Camera Motion -->
+      <div class="stress-test-card" data-color="red">
+        <div class="st-header" onclick="toggleStressTest(this)">
+          <div class="st-header-left">
+            <span class="st-number">05</span>
+            <div>
+              <h3 class="st-title">Camera Motion Sensitivity</h3>
+              <p class="st-question">Can the model identify camera-induced perspective shifts?</p>
+            </div>
+          </div>
+          <i class="fas fa-chevron-down st-toggle"></i>
+        </div>
+        <div class="st-body">
+          <div class="st-content-grid">
+            <div class="st-text">
+              <p>
+                Given videos with synthetic or real-world camera motion (pan, tilt, zoom), the
+                model must identify the correct motion type. Success requires distinguishing
+                camera-induced perspective change from genuine scene change.
+              </p>
+              <div class="st-highlight">
+                <strong>Key Finding:</strong> All models score 10&ndash;25% on camera motion
+                (humans: 98%). The vision encoder achieves only 39.3% on a 4-way classification
+                (chance = 25%) with no recovery through LLM layers &mdash; this is an encoding
+                failure, not a reasoning failure.
+              </div>
+            </div>
+            <div class="st-results">
+              <table class="results-table">
+                <thead>
+                  <tr><th>Model</th><th>Cam. Avg.</th><th>Lane F1</th></tr>
+                </thead>
+                <tbody>
+                  <tr class="human-row"><td>Humans</td><td><strong>98%</strong></td><td><strong>100%</strong></td></tr>
+                  <tr><td>Gemini 2.5 Pro</td><td class="bad-cell">24.3%</td><td class="bad-cell">31.4%</td></tr>
+                  <tr><td>GPT-5-nano</td><td class="bad-cell">13.7%</td><td class="bad-cell">27.2%</td></tr>
+                  <tr><td>Qwen2.5-VL-72B</td><td class="bad-cell">18.0%</td><td class="bad-cell">24.0%</td></tr>
+                  <tr><td>Qwen2.5-VL-7B</td><td class="bad-cell">15.3%</td><td class="bad-cell">20.7%</td></tr>
+                  <tr><td>LLaVA-NeXT-7B</td><td class="bad-cell">14.3%</td><td class="bad-cell">16.9%</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ==================== MECHANISTIC INSIGHTS ==================== -->
+  <section class="section" id="mechanistic">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Mechanistic Probing</h2>
+      <p class="section-subtitle has-text-centered">
+        Beyond behavioral testing, REVEAL localizes <em>where</em> and <em>why</em> each failure
+        originates within the vision-language pipeline.
+      </p>
+
+      <div class="pipeline-container">
+        <div class="pipeline-stage">
+          <div class="stage-box stage-encoder">
+            <div class="stage-icon"><i class="fas fa-eye"></i></div>
+            <h4>Vision Encoder</h4>
+            <p>Conv3D + ViT</p>
+          </div>
+          <div class="stage-failures">
+            <div class="failure-tag tag-red">Camera Motion (39.3%)</div>
+            <div class="failure-tag tag-red">Cross-Frame (0% cross-attn)</div>
+          </div>
+        </div>
+
+        <div class="pipeline-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+
+        <div class="pipeline-stage">
+          <div class="stage-box stage-projector">
+            <div class="stage-icon"><i class="fas fa-exchange-alt"></i></div>
+            <h4>Projector</h4>
+            <p>Vision &rarr; Language</p>
+          </div>
+          <div class="stage-failures">
+            <div class="failure-tag tag-yellow">Temporal signal: 71.3%</div>
+          </div>
+        </div>
+
+        <div class="pipeline-arrow"><i class="fas fa-long-arrow-alt-right"></i></div>
+
+        <div class="pipeline-stage">
+          <div class="stage-box stage-llm">
+            <div class="stage-icon"><i class="fas fa-brain"></i></div>
+            <h4>LLM Layers</h4>
+            <p>Late Layers (15&ndash;27)</p>
+          </div>
+          <div class="stage-failures">
+            <div class="failure-tag tag-orange">Sycophancy (3&times; suppression)</div>
+            <div class="failure-tag tag-orange">Temporal Bias (73%&rarr;53%)</div>
+            <div class="failure-tag tag-orange">Language Shortcuts</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="insight-cards">
+        <div class="insight-card">
+          <div class="insight-icon-wrap"><i class="fas fa-microchip"></i></div>
+          <h4>Encoding-Stage Bottlenecks</h4>
+          <p>
+            Camera motion and cross-frame integration failures originate at the vision encoder.
+            Windowed ViT attention isolates each token to 3.1% of the visual input with zero
+            cross-frame attention. <strong>No downstream fix is possible.</strong>
+          </p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon-wrap"><i class="fas fa-layer-group"></i></div>
+          <h4>Late-Layer Prior Override</h4>
+          <p>
+            Temporal direction is encoded at the vision encoder (73.1% probe accuracy) but
+            collapses to near-chance (~53%) by layer 26. The model <strong>has the information
+            and discards it</strong> in favor of learned event schemas.
+          </p>
+        </div>
+        <div class="insight-card">
+          <div class="insight-icon-wrap"><i class="fas fa-graduation-cap"></i></div>
+          <h4>Instruction Tuning Hurts</h4>
+          <p>
+            Instruction tuning amplifies sycophancy ~3&times; and concentrates visual attention
+            suppression in late layers. Video-to-claim attention ratio degrades from 17.7 (Base)
+            to 3.9 (Instruct) even under neutral prompts.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BENCHMARK COMPOSITION ==================== -->
+  <section class="section hero is-light" id="benchmark">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Benchmark Composition</h2>
+
+      <div class="table-container">
+        <table class="table is-hoverable is-fullwidth benchmark-table">
+          <thead>
+            <tr>
+              <th>Stress Test</th>
+              <th># Videos</th>
+              <th># QA Pairs</th>
+              <th>QA Type</th>
+              <th>Source Datasets</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="row-blue">
+              <td><strong>Video Sycophancy</strong></td>
+              <td>186</td>
+              <td>2,232</td>
+              <td>True / False</td>
+              <td>Ego4D</td>
+            </tr>
+            <tr class="row-blue">
+              <td><strong>Language-Only Shortcuts</strong></td>
+              <td>201</td>
+              <td>1,000</td>
+              <td>Open-Ended, MCQ</td>
+              <td>YouCook2</td>
+            </tr>
+            <tr class="row-purple">
+              <td><strong>Temporal Expectation Bias</strong></td>
+              <td>268</td>
+              <td>508</td>
+              <td>Open-Ended</td>
+              <td>Charades, Pexels, YouCook2, Ego4D, EPIC-KITCHENS</td>
+            </tr>
+            <tr class="row-purple">
+              <td><strong>Cross-Frame Integration</strong></td>
+              <td>358</td>
+              <td>379</td>
+              <td>MCQ</td>
+              <td>NextQA</td>
+            </tr>
+            <tr class="row-red">
+              <td><strong>Camera Motion Sensitivity</strong></td>
+              <td>500</td>
+              <td>500</td>
+              <td>MCQ</td>
+              <td>Synthetic, Driving Videos</td>
+            </tr>
+          </tbody>
+          <tfoot>
+            <tr>
+              <td><strong>Total</strong></td>
+              <td><strong>1,513</strong></td>
+              <td><strong>4,619</strong></td>
+              <td colspan="2"></td>
+            </tr>
+          </tfoot>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== QUOTABLE FINDINGS ==================== -->
+  <section class="section" id="findings">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Key Findings</h2>
+      <div class="quotes-grid">
+        <blockquote class="finding-quote">
+          <p>Instruction tuning <strong>amplifies sycophancy</strong> rather than mitigating it.</p>
+        </blockquote>
+        <blockquote class="finding-quote">
+          <p>Models reliably detect spatial anomalies (<strong>91.3%</strong>) while collapsing on temporal violations (<strong>30.6%</strong>).</p>
+        </blockquote>
+        <blockquote class="finding-quote">
+          <p>Gemini 2.5 Pro falls from <strong>74% to 8%</strong> accuracy when scene information is distributed across frames.</p>
+        </blockquote>
+        <blockquote class="finding-quote">
+          <p>Camera motion signals are simply <strong>never encoded</strong> &mdash; this is an encoding failure, not a reasoning failure.</p>
+        </blockquote>
+        <blockquote class="finding-quote">
+          <p>The model <strong>has the temporal information and then discards it</strong>.</p>
+        </blockquote>
+        <blockquote class="finding-quote">
+          <p>Different failure modes require <strong>fundamentally different fixes</strong>.</p>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== COMPARISON WITH PRIOR WORK ==================== -->
+  <section class="section hero is-light" id="comparison">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">How REVEAL Compares</h2>
+      <p class="section-subtitle has-text-centered">
+        REVEAL is the first benchmark to combine active conflict creation, mechanistic evaluation,
+        and coverage across all five vulnerability types.
+      </p>
+      <div class="comparison-grid">
+        <div class="comparison-item">
+          <div class="comp-icon"><i class="fas fa-bolt"></i></div>
+          <h4>Active Conflicts</h4>
+          <p>Programmatically forces direct conflicts between visual evidence and non-visual biases &mdash; not passive mining.</p>
+        </div>
+        <div class="comparison-item">
+          <div class="comp-icon"><i class="fas fa-search"></i></div>
+          <h4>Mechanistic Analysis</h4>
+          <p>Goes beyond behavioral accuracy to probe internal attention, representations, and output distributions.</p>
+        </div>
+        <div class="comparison-item">
+          <div class="comp-icon"><i class="fas fa-layer-group"></i></div>
+          <h4>5 Vulnerability Types</h4>
+          <p>Covers sycophancy, language priors, temporal bias, cross-frame integration, and camera motion in one unified framework.</p>
+        </div>
+        <div class="comparison-item">
+          <div class="comp-icon"><i class="fas fa-cogs"></i></div>
+          <h4>Scalable Pipeline</h4>
+          <p>Automated data generation with human-verified ground truth. New perturbation types can be added without manual annotation.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ==================== BIBTEX ==================== -->
   <section class="section" id="BibTeX">
     <div class="container is-max-desktop content">
       <div class="bibtex-header">
@@ -480,41 +937,34 @@
           <span class="copy-text">Copy</span>
         </button>
       </div>
-      <pre id="bibtex-code"><code>@article{YourPaperKey2024,
-  title={Your Paper Title Here},
-  author={First Author and Second Author and Third Author},
-  journal={Conference/Journal Name},
-  year={2024},
-  url={https://your-domain.com/your-project-page}
+      <pre id="bibtex-code"><code>@inproceedings{reveal2026,
+  title={Stress Tests {REVEAL} Fragile Temporal and Visual
+         Grounding in Video-Language Models},
+  author={Anonymous},
+  booktitle={European Conference on Computer Vision (ECCV)},
+  year={2026}
 }</code></pre>
     </div>
-</section>
-<!--End BibTex citation -->
+  </section>
 
+  </main>
 
   <footer class="footer">
-  <div class="container">
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-
-          <p>
-            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank">Nerfies</a> project page.
-            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license"  href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-
+    <div class="container">
+      <div class="columns is-centered">
+        <div class="column is-8">
+          <div class="content has-text-centered">
+            <p>
+              This page was built using the
+              <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank">Academic Project Page Template</a>.
+              Licensed under
+              <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">CC BY-SA 4.0</a>.
+            </p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
-</footer>
+  </footer>
 
-<!-- Statcounter tracking code -->
-  
-<!-- You can add a tracker to track page visits by creating an account at statcounter.com -->
-
-    <!-- End of Statcounter Code -->
-
-  </body>
-  </html>
+</body>
+</html>
