@@ -91,18 +91,6 @@ body {
   pointer-events: none;
 }
 
-.venue-badge {
-  display: inline-block;
-  background: var(--gradient-reveal);
-  color: white;
-  font-weight: 700;
-  font-size: 0.85rem;
-  padding: 0.35rem 1.1rem;
-  border-radius: 100px;
-  margin-bottom: 1.5rem;
-  letter-spacing: 0.05em;
-}
-
 .publication-title {
   font-family: 'Inter', sans-serif !important;
   font-weight: 800 !important;
@@ -503,20 +491,6 @@ body {
   line-height: 1.6;
   margin-bottom: 1rem;
 }
-
-.mode-tests { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.25rem; }
-.test-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 0.35rem 0.75rem;
-  border-radius: 100px;
-}
-.chip-blue   { background: var(--pastel-blue); color: var(--re-blue); }
-.chip-purple { background: var(--pastel-purple); color: var(--ve-violet); }
-.chip-red    { background: var(--pastel-red); color: var(--al-pink); }
 
 .mode-question {
   font-size: 0.85rem;

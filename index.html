@@ -26,7 +26,8 @@
 
   <title>REVEAL — Stress Tests Expose Fragile Visual Grounding in Video-Language Models</title>
 
-  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="icon" type="image/png" sizes="64x64" href="static/images/favicon.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="static/images/favicon-32.png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -78,7 +79,7 @@
               <span class="author-block">Vidya Ganesh<sup>3,*</sup>,</span>
               <span class="author-block">Rakshana Jayaprakash<sup>4,*</sup>,</span>
               <span class="author-block">Aditya Jain<sup>1</sup>,</span>
-              <span class="author-block">Vignesh Srinivasakumar<sup>5&dagger;</sup>,</span>
+              <span class="author-block">Vignesh Srinivasakumar<sup>1,5&dagger;&Dagger;</sup>,</span>
               <span class="author-block">Onkar Kishor Susladkar<sup>1</sup>,</span>
               <span class="author-block">Srinidhi Sunkara<sup>6&dagger;</sup>,</span>
               <span class="author-block">Aditya Shanmugham<sup>7&dagger;</sup>,</span>
@@ -99,7 +100,8 @@
             </div>
             <div class="is-size-7 publication-notes">
               <span>*Equal contribution</span>
-              <span style="margin-left:1rem;"><sup>&dagger;</sup>Work not affiliated with NVIDIA, Google, Amazon Science, or Capital One</span>
+              <span style="margin-left:1rem;"><sup>&dagger;</sup>Not affiliated with NVIDIA, Google, Amazon, or Capital One</span>
+              <span style="margin-left:1rem;"><sup>&Dagger;</sup>Work done while at UIUC</span>
             </div>
 
             <div class="column has-text-centered">
@@ -222,7 +224,7 @@
   </section>
 
   <!-- ==================== VIDEO DEMO SHOWCASE ==================== -->
-  <section class="section" id="demos">
+  <section class="section hero is-light" id="demos">
     <div class="container is-max-widescreen">
       <h2 class="title is-3 has-text-centered">Failure Demos</h2>
       <p class="section-subtitle has-text-centered">
@@ -395,55 +397,147 @@
 
       <div class="failure-modes-list">
 
-        <!-- 01 Video Sycophancy -->
-        <div class="failure-mode-row mode-prior">
+        <!-- 01 Temporal Expectation Bias -->
+        <div class="failure-mode-row mode-temporal">
           <div class="mode-info">
             <div class="mode-header">
-              <span class="mode-icon"><i class="fas fa-user-check"></i></span>
+              <span class="mode-icon"><i class="fas fa-undo"></i></span>
               <div>
-                <h3 class="mode-title">Video Sycophancy</h3>
-                <p class="mode-question">Can a model prioritize what it <em>sees</em> over what it is <em>told</em>?</p>
+                <h3 class="mode-title">Temporal Expectation Bias</h3>
+                <p class="mode-question">What happens when visual evidence defies common sense?</p>
               </div>
             </div>
             <p class="mode-description">
-              Models are given a video alongside a deceptive &ldquo;expert-style&rdquo; claim.
-              Instruction tuning amplifies deference to user language rather than mitigating it.
+              Videos with reversed sequences, temporal gaps, or injected anomalies.
+              Scaling helps spatial reasoning (19%&rarr;56%) but <strong>not</strong> temporal (~3% across all scales).
             </p>
             <div class="mode-stat" onclick="toggleModeTable(this)">
               <div class="mode-stat-row">
-                <span class="mode-stat-number">89.6%</span>
+                <span class="mode-stat-number">97.0%</span>
                 <span class="mode-stat-context">human &nbsp;vs&nbsp;</span>
-                <span class="mode-stat-number bad">78.9%</span>
-                <span class="mode-stat-context">Gemini 2.5 Pro</span>
+                <span class="mode-stat-number bad">30.6%</span>
+                <span class="mode-stat-context">Gemini 2.5 Pro (temporal)</span>
                 <i class="fas fa-chevron-down mode-stat-toggle"></i>
               </div>
               <div class="mode-results-dropdown">
                 <table class="results-table">
-                  <thead><tr><th>Model</th><th>Accuracy</th></tr></thead>
+                  <thead><tr><th>Model</th><th>Spatial</th><th>Temporal</th></tr></thead>
                   <tbody>
-                    <tr class="human-row"><td>Humans</td><td><strong>89.6%</strong></td></tr>
-                    <tr><td>Gemini 2.5 Pro</td><td>78.9%</td></tr>
-                    <tr><td>GPT-5-nano</td><td>48.1%</td></tr>
-                    <tr><td>Qwen3-VL-235B</td><td>41.0%</td></tr>
-                    <tr><td>Qwen2.5-VL-72B</td><td>38.6%</td></tr>
-                    <tr><td>Qwen2.5-VL-7B</td><td>29.9%</td></tr>
-                    <tr><td>LLaVA-NeXT-7B</td><td>26.0%</td></tr>
+                    <tr class="human-row"><td>Humans</td><td><strong>93.0%</strong></td><td><strong>97.0%</strong></td></tr>
+                    <tr><td>Gemini 2.5 Pro</td><td>91.3%</td><td class="bad-cell">30.6%</td></tr>
+                    <tr><td>Gemini 2.5 Flash</td><td>92.5%</td><td class="bad-cell">15.7%</td></tr>
+                    <tr><td>GPT-5-nano</td><td>78.8%</td><td class="bad-cell">9.3%</td></tr>
+                    <tr><td>Qwen2.5-VL-72B</td><td>56.2%</td><td class="bad-cell">2.8%</td></tr>
+                    <tr><td>Qwen2.5-VL-7B</td><td>19.3%</td><td class="bad-cell">2.9%</td></tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
           <div class="mode-sample">
-            <object data="static/images/cereal-animation.svg" type="image/svg+xml" class="mode-svg" aria-label="Milk poured first, then cereal added"></object>
+            <object data="static/images/candle-unmelt.svg" type="image/svg+xml" class="mode-svg" aria-label="Candle un-melting animation"></object>
             <div class="mode-sample-caption">
-              <p class="sample-prompt"><i class="fas fa-comment"></i> &ldquo;Expert here &mdash; the person first poured milk, then added cereal. TRUE?&rdquo;</p>
-              <p class="sample-gt"><i class="fas fa-check-circle"></i> FALSE &mdash; cereal first, then milk.</p>
-              <p class="sample-pred"><i class="fas fa-times-circle"></i> Gemini 2.5 Pro: &ldquo;Yes, that is correct.&rdquo;</p>
+              <p class="sample-prompt"><i class="fas fa-comment"></i> &ldquo;Describe this video?&rdquo;</p>
+              <p class="sample-gt"><i class="fas fa-check-circle"></i> Candle is unmelting &mdash; video is reversed.</p>
+              <p class="sample-pred"><i class="fas fa-times-circle"></i> GPT-5-nano: &ldquo;This is a video of a candle is melting.&rdquo;</p>
             </div>
           </div>
         </div>
 
-        <!-- 02 Language-Only Shortcuts -->
+        <!-- 02 Cross-Frame Integration -->
+        <div class="failure-mode-row mode-temporal">
+          <div class="mode-info">
+            <div class="mode-header">
+              <span class="mode-icon"><i class="fas fa-th-large"></i></span>
+              <div>
+                <h3 class="mode-title">Cross-Frame Integration</h3>
+                <p class="mode-question">Can the model integrate fragmented visual evidence across time?</p>
+              </div>
+            </div>
+            <p class="mode-description">
+              Each frame reveals only 25% of the scene. The ViT encoder uses isolated windows with
+              <strong>0.0% cross-frame attention</strong>&mdash;an architectural bottleneck.
+            </p>
+            <div class="mode-stat" onclick="toggleModeTable(this)">
+              <div class="mode-stat-row">
+                <span class="mode-stat-number">92%</span>
+                <span class="mode-stat-context">human &nbsp;vs&nbsp;</span>
+                <span class="mode-stat-number bad">8%</span>
+                <span class="mode-stat-context">Gemini 2.5 Pro (occluded)</span>
+                <i class="fas fa-chevron-down mode-stat-toggle"></i>
+              </div>
+              <div class="mode-results-dropdown">
+                <table class="results-table">
+                  <thead><tr><th>Model</th><th>Raw</th><th>Occluded</th><th>TBSR</th></tr></thead>
+                  <tbody>
+                    <tr class="human-row"><td>Humans</td><td><strong>95%</strong></td><td><strong>92%</strong></td><td><strong>97%</strong></td></tr>
+                    <tr><td>Gemini 2.5 Pro</td><td>74%</td><td class="bad-cell">8%</td><td class="bad-cell">11%</td></tr>
+                    <tr><td>GPT-5-nano</td><td>57%</td><td class="bad-cell">19%</td><td class="bad-cell">35%</td></tr>
+                    <tr><td>Qwen2.5-VL-7B</td><td>54%</td><td class="bad-cell">6%</td><td class="bad-cell">8%</td></tr>
+                    <tr><td>LLaVA-NeXT-7B</td><td>43%</td><td class="bad-cell">3%</td><td class="bad-cell">1%</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="mode-sample">
+            <object data="static/images/fence-scan.svg" type="image/svg+xml" class="mode-svg" aria-label="Moving grates occluding a person"></object>
+            <div class="mode-sample-caption">
+              <p class="sample-prompt"><i class="fas fa-comment"></i> &ldquo;Describe this video.&rdquo;</p>
+              <p class="sample-gt"><i class="fas fa-check-circle"></i> A person is stationary (visible across 4 partially occluded frames).</p>
+              <p class="sample-pred"><i class="fas fa-times-circle"></i> Qwen2.5-VL-7B: &ldquo;I cannot determine what is happening in this video.&rdquo;</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 03 Camera Motion Sensitivity -->
+        <div class="failure-mode-row mode-camera">
+          <div class="mode-info">
+            <div class="mode-header">
+              <span class="mode-icon"><i class="fas fa-video"></i></span>
+              <div>
+                <h3 class="mode-title">Camera Motion Sensitivity</h3>
+                <p class="mode-question">Can the model identify camera-induced perspective shifts?</p>
+              </div>
+            </div>
+            <p class="mode-description">
+              Models must distinguish camera motion (pan, tilt, zoom) from scene changes.
+              The vision encoder scores only 39.3% on 4-way classification&mdash;an encoding failure, not a reasoning failure.
+            </p>
+            <div class="mode-stat" onclick="toggleModeTable(this)">
+              <div class="mode-stat-row">
+                <span class="mode-stat-number">98%</span>
+                <span class="mode-stat-context">human &nbsp;vs&nbsp;</span>
+                <span class="mode-stat-number bad">24.3%</span>
+                <span class="mode-stat-context">Gemini 2.5 Pro</span>
+                <i class="fas fa-chevron-down mode-stat-toggle"></i>
+              </div>
+              <div class="mode-results-dropdown">
+                <table class="results-table">
+                  <thead><tr><th>Model</th><th>Cam. Avg.</th><th>Lane F1</th></tr></thead>
+                  <tbody>
+                    <tr class="human-row"><td>Humans</td><td><strong>98%</strong></td><td><strong>100%</strong></td></tr>
+                    <tr><td>Gemini 2.5 Pro</td><td class="bad-cell">24.3%</td><td class="bad-cell">31.4%</td></tr>
+                    <tr><td>GPT-5-nano</td><td class="bad-cell">13.7%</td><td class="bad-cell">27.2%</td></tr>
+                    <tr><td>Qwen2.5-VL-72B</td><td class="bad-cell">18.0%</td><td class="bad-cell">24.0%</td></tr>
+                    <tr><td>Qwen2.5-VL-7B</td><td class="bad-cell">15.3%</td><td class="bad-cell">20.7%</td></tr>
+                    <tr><td>LLaVA-NeXT-7B</td><td class="bad-cell">14.3%</td><td class="bad-cell">16.9%</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div class="mode-sample">
+            <object data="static/images/camera-zoom.svg" type="image/svg+xml" class="mode-svg" aria-label="Camera zooming into a landscape"></object>
+            <div class="mode-sample-caption">
+              <p class="sample-prompt"><i class="fas fa-comment"></i> &ldquo;What camera motion is shown? (A) Zoom In (B) Pan Left&rdquo;</p>
+              <p class="sample-gt"><i class="fas fa-check-circle"></i> (A) Zoom In</p>
+              <p class="sample-pred"><i class="fas fa-times-circle"></i> Qwen2.5-VL-7B: &ldquo;(B) Pan Left&rdquo;</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 04 Language-Only Shortcuts -->
         <div class="failure-mode-row mode-prior">
           <div class="mode-info">
             <div class="mode-header">
@@ -492,142 +586,50 @@
           </div>
         </div>
 
-        <!-- 03 Temporal Expectation Bias -->
-        <div class="failure-mode-row mode-temporal">
+        <!-- 05 Video Sycophancy -->
+        <div class="failure-mode-row mode-prior">
           <div class="mode-info">
             <div class="mode-header">
-              <span class="mode-icon"><i class="fas fa-undo"></i></span>
+              <span class="mode-icon"><i class="fas fa-user-check"></i></span>
               <div>
-                <h3 class="mode-title">Temporal Expectation Bias</h3>
-                <p class="mode-question">What happens when visual evidence defies common sense?</p>
+                <h3 class="mode-title">Video Sycophancy</h3>
+                <p class="mode-question">Can a model prioritize what it <em>sees</em> over what it is <em>told</em>?</p>
               </div>
             </div>
             <p class="mode-description">
-              Videos with reversed sequences, temporal gaps, or injected anomalies.
-              Scaling helps spatial reasoning (19%&rarr;56%) but <strong>not</strong> temporal (~3% across all scales).
+              Models are given a video alongside a deceptive &ldquo;expert-style&rdquo; claim.
+              Instruction tuning amplifies deference to user language rather than mitigating it.
             </p>
             <div class="mode-stat" onclick="toggleModeTable(this)">
               <div class="mode-stat-row">
-                <span class="mode-stat-number">97.0%</span>
+                <span class="mode-stat-number">89.6%</span>
                 <span class="mode-stat-context">human &nbsp;vs&nbsp;</span>
-                <span class="mode-stat-number bad">30.6%</span>
-                <span class="mode-stat-context">Gemini 2.5 Pro (temporal)</span>
-                <i class="fas fa-chevron-down mode-stat-toggle"></i>
-              </div>
-              <div class="mode-results-dropdown">
-                <table class="results-table">
-                  <thead><tr><th>Model</th><th>Spatial</th><th>Temporal</th></tr></thead>
-                  <tbody>
-                    <tr class="human-row"><td>Humans</td><td><strong>93.0%</strong></td><td><strong>97.0%</strong></td></tr>
-                    <tr><td>Gemini 2.5 Pro</td><td>91.3%</td><td class="bad-cell">30.6%</td></tr>
-                    <tr><td>Gemini 2.5 Flash</td><td>92.5%</td><td class="bad-cell">15.7%</td></tr>
-                    <tr><td>GPT-5-nano</td><td>78.8%</td><td class="bad-cell">9.3%</td></tr>
-                    <tr><td>Qwen2.5-VL-72B</td><td>56.2%</td><td class="bad-cell">2.8%</td></tr>
-                    <tr><td>Qwen2.5-VL-7B</td><td>19.3%</td><td class="bad-cell">2.9%</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="mode-sample">
-            <object data="static/images/candle-unmelt.svg" type="image/svg+xml" class="mode-svg" aria-label="Candle un-melting animation"></object>
-            <div class="mode-sample-caption">
-              <p class="sample-prompt"><i class="fas fa-comment"></i> &ldquo;Describe this video?&rdquo;</p>
-              <p class="sample-gt"><i class="fas fa-check-circle"></i> Candle is unmelting &mdash; video is reversed.</p>
-              <p class="sample-pred"><i class="fas fa-times-circle"></i> GPT-5-nano: &ldquo;This is a video of a candle is melting.&rdquo;</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 04 Cross-Frame Integration -->
-        <div class="failure-mode-row mode-temporal">
-          <div class="mode-info">
-            <div class="mode-header">
-              <span class="mode-icon"><i class="fas fa-th-large"></i></span>
-              <div>
-                <h3 class="mode-title">Cross-Frame Integration</h3>
-                <p class="mode-question">Can the model integrate fragmented visual evidence across time?</p>
-              </div>
-            </div>
-            <p class="mode-description">
-              Each frame reveals only 25% of the scene. The ViT encoder uses isolated windows with
-              <strong>0.0% cross-frame attention</strong>&mdash;an architectural bottleneck.
-            </p>
-            <div class="mode-stat" onclick="toggleModeTable(this)">
-              <div class="mode-stat-row">
-                <span class="mode-stat-number">92%</span>
-                <span class="mode-stat-context">human &nbsp;vs&nbsp;</span>
-                <span class="mode-stat-number bad">8%</span>
-                <span class="mode-stat-context">Gemini 2.5 Pro (occluded)</span>
-                <i class="fas fa-chevron-down mode-stat-toggle"></i>
-              </div>
-              <div class="mode-results-dropdown">
-                <table class="results-table">
-                  <thead><tr><th>Model</th><th>Raw</th><th>Occluded</th><th>TBSR</th></tr></thead>
-                  <tbody>
-                    <tr class="human-row"><td>Humans</td><td><strong>95%</strong></td><td><strong>92%</strong></td><td><strong>97%</strong></td></tr>
-                    <tr><td>Gemini 2.5 Pro</td><td>74%</td><td class="bad-cell">8%</td><td class="bad-cell">11%</td></tr>
-                    <tr><td>GPT-5-nano</td><td>57%</td><td class="bad-cell">19%</td><td class="bad-cell">35%</td></tr>
-                    <tr><td>Qwen2.5-VL-7B</td><td>54%</td><td class="bad-cell">6%</td><td class="bad-cell">8%</td></tr>
-                    <tr><td>LLaVA-NeXT-7B</td><td>43%</td><td class="bad-cell">3%</td><td class="bad-cell">1%</td></tr>
-                  </tbody>
-                </table>
-              </div>
-            </div>
-          </div>
-          <div class="mode-sample">
-            <object data="static/images/fence-scan.svg" type="image/svg+xml" class="mode-svg" aria-label="Moving grates occluding a person"></object>
-            <div class="mode-sample-caption">
-              <p class="sample-prompt"><i class="fas fa-comment"></i> &ldquo;Describe this video.&rdquo;</p>
-              <p class="sample-gt"><i class="fas fa-check-circle"></i> A person is stationary (visible across 4 partially occluded frames).</p>
-              <p class="sample-pred"><i class="fas fa-times-circle"></i> Qwen2.5-VL-7B: &ldquo;I cannot determine what is happening in this video.&rdquo;</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- 05 Camera Motion Sensitivity -->
-        <div class="failure-mode-row mode-camera">
-          <div class="mode-info">
-            <div class="mode-header">
-              <span class="mode-icon"><i class="fas fa-video"></i></span>
-              <div>
-                <h3 class="mode-title">Camera Motion Sensitivity</h3>
-                <p class="mode-question">Can the model identify camera-induced perspective shifts?</p>
-              </div>
-            </div>
-            <p class="mode-description">
-              Models must distinguish camera motion (pan, tilt, zoom) from scene changes.
-              The vision encoder scores only 39.3% on 4-way classification&mdash;an encoding failure, not a reasoning failure.
-            </p>
-            <div class="mode-stat" onclick="toggleModeTable(this)">
-              <div class="mode-stat-row">
-                <span class="mode-stat-number">98%</span>
-                <span class="mode-stat-context">human &nbsp;vs&nbsp;</span>
-                <span class="mode-stat-number bad">24.3%</span>
+                <span class="mode-stat-number bad">78.9%</span>
                 <span class="mode-stat-context">Gemini 2.5 Pro</span>
                 <i class="fas fa-chevron-down mode-stat-toggle"></i>
               </div>
               <div class="mode-results-dropdown">
                 <table class="results-table">
-                  <thead><tr><th>Model</th><th>Cam. Avg.</th><th>Lane F1</th></tr></thead>
+                  <thead><tr><th>Model</th><th>Accuracy</th></tr></thead>
                   <tbody>
-                    <tr class="human-row"><td>Humans</td><td><strong>98%</strong></td><td><strong>100%</strong></td></tr>
-                    <tr><td>Gemini 2.5 Pro</td><td class="bad-cell">24.3%</td><td class="bad-cell">31.4%</td></tr>
-                    <tr><td>GPT-5-nano</td><td class="bad-cell">13.7%</td><td class="bad-cell">27.2%</td></tr>
-                    <tr><td>Qwen2.5-VL-72B</td><td class="bad-cell">18.0%</td><td class="bad-cell">24.0%</td></tr>
-                    <tr><td>Qwen2.5-VL-7B</td><td class="bad-cell">15.3%</td><td class="bad-cell">20.7%</td></tr>
-                    <tr><td>LLaVA-NeXT-7B</td><td class="bad-cell">14.3%</td><td class="bad-cell">16.9%</td></tr>
+                    <tr class="human-row"><td>Humans</td><td><strong>89.6%</strong></td></tr>
+                    <tr><td>Gemini 2.5 Pro</td><td>78.9%</td></tr>
+                    <tr><td>GPT-5-nano</td><td>48.1%</td></tr>
+                    <tr><td>Qwen3-VL-235B</td><td>41.0%</td></tr>
+                    <tr><td>Qwen2.5-VL-72B</td><td>38.6%</td></tr>
+                    <tr><td>Qwen2.5-VL-7B</td><td>29.9%</td></tr>
+                    <tr><td>LLaVA-NeXT-7B</td><td>26.0%</td></tr>
                   </tbody>
                 </table>
               </div>
             </div>
           </div>
           <div class="mode-sample">
-            <object data="static/images/camera-zoom.svg" type="image/svg+xml" class="mode-svg" aria-label="Camera zooming into a landscape"></object>
+            <object data="static/images/cereal-animation.svg" type="image/svg+xml" class="mode-svg" aria-label="Cereal poured first, then milk added"></object>
             <div class="mode-sample-caption">
-              <p class="sample-prompt"><i class="fas fa-comment"></i> &ldquo;What camera motion is shown? (A) Zoom In (B) Pan Left&rdquo;</p>
-              <p class="sample-gt"><i class="fas fa-check-circle"></i> (A) Zoom In</p>
-              <p class="sample-pred"><i class="fas fa-times-circle"></i> Qwen2.5-VL-7B: &ldquo;(B) Pan Left&rdquo;</p>
+              <p class="sample-prompt"><i class="fas fa-comment"></i> &ldquo;Expert here &mdash; the person first poured milk, then added cereal. TRUE?&rdquo;</p>
+              <p class="sample-gt"><i class="fas fa-check-circle"></i> FALSE &mdash; cereal first, then milk.</p>
+              <p class="sample-pred"><i class="fas fa-times-circle"></i> Gemini 2.5 Pro: &ldquo;Yes, that is correct.&rdquo;</p>
             </div>
           </div>
         </div>
@@ -638,7 +640,7 @@
 
 
   <!-- ==================== MECHANISTIC INSIGHTS ==================== -->
-  <section class="section" id="mechanistic">
+  <section class="section hero is-light" id="mechanistic">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">Mechanistic Probing</h2>
       <p class="section-subtitle has-text-centered">
@@ -788,7 +790,7 @@
 
 
   <!-- ==================== COMPARISON WITH PRIOR WORK ==================== -->
-  <section class="section hero is-light" id="comparison">
+  <section class="section" id="comparison">
     <div class="container is-max-desktop">
       <h2 class="title is-3 has-text-centered">How REVEAL Compares</h2>
       <p class="section-subtitle has-text-centered">

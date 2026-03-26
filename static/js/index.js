@@ -1,5 +1,3 @@
-window.HELP_IMPROVE_VIDEOJS = false;
-
 /* ── Collapsible results table inside stat bar ── */
 function toggleModeTable(statEl) {
   statEl.classList.toggle('open');
