@@ -424,13 +424,33 @@ body {
   gap: 0.75rem;
   justify-content: center;
 }
-.mode-sample img {
+.mode-sample img,
+.mode-sample .mode-svg {
   width: 100%;
   border-radius: var(--border-radius);
   background: #000;
   min-height: 140px;
   object-fit: cover;
 }
+.mode-svg {
+  display: block;
+  height: auto;
+  aspect-ratio: 720 / 320;
+}
+.mode-blank-video {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  height: 200px;
+  background: #0b0b0b;
+  color: #555;
+  font-size: 0.95rem;
+  font-weight: 600;
+  border-radius: var(--border-radius);
+}
+.mode-blank-video i { font-size: 2rem; }
 .mode-sample-caption {
   display: flex;
   flex-direction: column;

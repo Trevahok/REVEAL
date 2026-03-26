@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?><svg xmlns="http://www.w3.org/2000/svg" width="720" height="320" viewBox="0 0 720 320">
+  <defs>
+    <linearGradient id="bg" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#101522"/>
+      <stop offset="1" stop-color="#1b263d"/>
+    </linearGradient>
+
+    <!-- Flame radiance. Use userSpaceOnUse so it doesn't scale weirdly, and keep it inside a clip. -->
+    <radialGradient id="glow" cx="360" cy="110" r="170" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffd77a" stop-opacity="0.48"/>
+      <stop offset="0.35" stop-color="#ffb347" stop-opacity="0.18"/>
+      <stop offset="1" stop-color="#ffb347" stop-opacity="0"/>
+    </radialGradient>
+
+    <linearGradient id="wax" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#fff3dc"/>
+      <stop offset="1" stop-color="#e7d7bf"/>
+    </linearGradient>
+
+    <linearGradient id="waxEdge" x1="0" x2="1">
+      <stop offset="0" stop-color="#d9c7ac"/>
+      <stop offset="1" stop-color="#fff7e8"/>
+    </linearGradient>
+
+    <linearGradient id="puddle" x1="0" x2="0" y1="0" y2="1">
+      <stop offset="0" stop-color="#efe0c8"/>
+      <stop offset="1" stop-color="#d7c3a4"/>
+    </linearGradient>
+
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%">
+      <feGaussianBlur stdDeviation="2"/>
+    </filter>
+
+    <!-- Clip so glow never bleeds outside the card area -->
+    <clipPath id="cardClip">
+      <rect x="0" y="0" width="720" height="320" rx="0"/>
+    </clipPath>
+
+    <!-- Timing:
+         - 0..0.97: slow un-melt
+         - 0.97..0.971: nearly-instant reset back to melted
+    -->
+  </defs>
+
+  <g clip-path="url(#cardClip)">
+    <rect x="0" y="0" width="720" height="320" fill="url(#bg)"/>
+
+    <!-- Glow follows flame/wick (translate matches flame group) -->
+    <circle cx="360" cy="110" r="180" fill="url(#glow)" opacity="0.95">
+      <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="4s" repeatCount="indefinite" keyTimes="0;0.97;0.971;1" values="0 72; 0 14; 0 72; 0 72"/>
+    </circle>
+
+    <!-- Table -->
+    <rect x="0" y="245" width="720" height="75" fill="#0d111a" opacity="0.55"/>
+
+    <!-- Wax puddle: big -> small, then near-instant reset to big -->
+    <ellipse cx="360" cy="262" rx="120" ry="22" fill="url(#puddle)" opacity="0.95">
+      <animate attributeName="rx" dur="4s" repeatCount="indefinite" keyTimes="0;0.97;0.971;1" values="120;28;120;120"/>
+      <animate attributeName="ry" dur="4s" repeatCount="indefinite" keyTimes="0;0.97;0.971;1" values="22;7;22;22"/>
+      <animate attributeName="opacity" dur="4s" repeatCount="indefinite" keyTimes="0;0.97;0.971;1" values="0.95;0.75;0.95;0.95"/>
+    </ellipse>
+
+    <!-- Candle body: short -> tall, then near-instant reset -->
+    <rect x="300" y="114" width="120" height="122" rx="22" fill="url(#wax)">
+      <animate attributeName="y" dur="4s" repeatCount="indefinite" keyTimes="0;0.97;0.971;1" values="114;54;114;114"/>
+      <animate attributeName="height" dur="4s" repeatCount="indefinite" keyTimes="0;0.97;0.971;1" values="122;182;122;122"/>
+    </rect>
+
+    <rect x="306" y="120" width="10" height="106" rx="6" fill="url(#waxEdge)" opacity="0.35">
+      <animate attributeName="y" dur="4s" repeatCount="indefinite" keyTimes="0;0.97;0.971;1" values="120;60;120;120"/>
+      <animate attributeName="height" dur="4s" repeatCount="indefinite" keyTimes="0;0.97;0.971;1" values="106;166;106;106"/>
+    </rect>
+
+    <!-- Rim: drippy -> smoother, then reset -->
+    <path fill="#f6ead6" opacity="0.98">
+      <animate attributeName="d" dur="4s" repeatCount="indefinite" keyTimes="0;0.97;0.971;1" values="           M300 125           C325 117, 340 142, 360 128           C380 114, 395 145, 420 127           L420 140           C396 155, 380 138, 360 150           C340 162, 325 145, 300 152           Z;            M300 75           C325 72, 342 86, 360 78           C378 70, 395 86, 420 78           L420 92           C396 104, 378 92, 360 102           C342 112, 325 100, 300 105           Z;            M300 125           C325 117, 340 142, 360 128           C380 114, 395 145, 420 127           L420 140           C396 155, 380 138, 360 150           C340 162, 325 145, 300 152           Z;            M300 125           C325 117, 340 142, 360 128           C380 114, 395 145, 420 127           L420 140           C396 155, 380 138, 360 150           C340 162, 325 145, 300 152           Z"/>
+    </path>
+
+    <!-- Drips retract: long -> short, then reset -->
+    <path fill="#efe1cc" opacity="0.95">
+      <animate attributeName="d" dur="4s" repeatCount="indefinite" keyTimes="0;0.97;0.971;1" values="           M312 120           C310 150, 320 170, 314 206           C308 232, 322 240, 334 228           C344 218, 334 200, 330 176           C326 150, 332 136, 336 120           Z;            M312 128           C311 142, 318 150, 316 164           C314 178, 321 184, 328 178           C334 172, 329 164, 328 154           C326 142, 330 136, 332 128           Z;            M312 120           C310 150, 320 170, 314 206           C308 232, 322 240, 334 228           C344 218, 334 200, 330 176           C326 150, 332 136, 336 120           Z;            M312 120           C310 150, 320 170, 314 206           C308 232, 322 240, 334 228           C344 218, 334 200, 330 176           C326 150, 332 136, 336 120           Z"/>
+    </path>
+
+    <path fill="#efe1cc" opacity="0.92">
+      <animate attributeName="d" dur="4s" repeatCount="indefinite" keyTimes="0;0.97;0.971;1" values="           M408 118           C414 150, 404 176, 412 204           C420 232, 404 242, 392 230           C382 220, 392 198, 396 172           C400 145, 394 134, 388 118           Z;            M408 128           C411 142, 406 154, 409 166           C412 180, 405 186, 398 179           C392 173, 396 163, 398 152           C401 141, 398 136, 396 128           Z;            M408 118           C414 150, 404 176, 412 204           C420 232, 404 242, 392 230           C382 220, 392 198, 396 172           C400 145, 394 134, 388 118           Z;            M408 118           C414 150, 404 176, 412 204           C420 232, 404 242, 392 230           C382 220, 392 198, 396 172           C400 145, 394 134, 388 118           Z"/>
+    </path>
+
+    <!-- Wick: slightly visible -->
+    <rect x="357" y="110" width="6" height="18" rx="3" fill="#2a2a2a" opacity="0.85">
+      <animate attributeName="y" dur="4s" repeatCount="indefinite" keyTimes="0;0.97;0.971;1" values="110;52;110;110"/>
+    </rect>
+
+    <!-- Flame: moves with wick -->
+    <g filter="url(#soft)">
+      <g>
+        <animateTransform attributeName="transform" attributeType="XML" type="translate" dur="4s" repeatCount="indefinite" keyTimes="0;0.97;0.971;1" values="0 72; 0 14; 0 72; 0 72"/>
+
+        <path fill="#ffcc66" opacity="0.95">
+          <animate attributeName="d" dur="0.22s" repeatCount="indefinite" values="               M360 30 C350 42, 350 58, 360 68 C370 58, 372 44, 360 30 Z;               M360 30 C348 44, 352 60, 360 70 C372 60, 374 46, 360 30 Z"/>
+        </path>
+        <path fill="#ff8a3d" opacity="0.55" d="M360 38 C355 46, 356 56, 360 62 C364 56, 365 46, 360 38 Z"/>
+      </g>
+    </g>
+
+  </g>
+</svg>
