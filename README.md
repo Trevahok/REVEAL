@@ -1,6 +1,6 @@
 # REVEAL — Project Page
 
-Project website for **"Stress Tests REVEAL Fragile Temporal and Visual Grounding in Video-Language Models"** (ECCV 2026).
+Project website for **"Stress Tests REVEAL Fragile Temporal and Visual Grounding in Video-Language Models"**.
 
 REVEAL is a diagnostic benchmark that isolates when and why Video-Language Models discount visual evidence — through five controlled stress tests paired with mechanistic probing.
 
