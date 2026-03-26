@@ -1,9 +1,8 @@
 window.HELP_IMPROVE_VIDEOJS = false;
 
-/* ── Stress-test accordion ── */
-function toggleStressTest(headerEl) {
-  var card = headerEl.closest('.stress-test-card');
-  card.classList.toggle('open');
+/* ── Collapsible results table inside stat bar ── */
+function toggleModeTable(statEl) {
+  statEl.classList.toggle('open');
 }
 
 /* ── Copy BibTeX ── */
@@ -89,8 +88,8 @@ document.addEventListener('DOMContentLoaded', function () {
   var strip = document.querySelector('.stats-strip');
   if (strip) statsObserver.observe(strip);
 
-  // Open the first stress test by default
-  var first = document.querySelector('.stress-test-card');
+  // Open the first stat table by default
+  var first = document.querySelector('.mode-stat');
   if (first) first.classList.add('open');
 });
 

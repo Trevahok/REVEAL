@@ -48,7 +48,4 @@
     <rect x="40" y="40" width="640" height="240" fill="#000" opacity="0.10"/>
   </g>
 
-  <text x="360" y="306" text-anchor="middle" font-family="ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto" font-size="13" fill="#3a3f4a" opacity="0.85">
-    stationary person + moving black vertical grates
-  </text>
 </svg>
