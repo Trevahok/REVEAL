@@ -69,15 +69,14 @@
             <div class="hero-chips">
               <span class="hero-chip">Diagnostic Benchmark</span>
               <span class="hero-chip">Mechanistic Probing</span>
-              <span class="hero-chip">Visual Grounding</span>
               <span class="hero-chip">Scalable Pipeline</span>
-              <span class="hero-chip">Temporal Grounding</span>
+              <span class="hero-chip">Minimal Bias</span>
             </div>
 
             <p class="hero-tagline">
-              A diagnostic benchmark that isolates <em>when</em> and <em>why</em> Video-Language Models
-              discount visual evidence &mdash; through five controlled stress tests paired with
-              mechanistic probing.
+              VLMs fail video in two ways &mdash; some signals never get encoded, others get overridden
+              by what the model already believes. Five failure modes, one diagnostic benchmark for
+              <em>when</em> and <em>why</em>.
             </p>
 
             <div class="is-size-5 publication-authors">
@@ -114,12 +113,6 @@
 
             <div class="column has-text-centered">
               <div class="publication-links">
-                <span class="link-block">
-                  <a href="#" class="external-link button is-normal is-rounded is-dark">
-                    <span class="icon"><i class="fas fa-file-pdf"></i></span>
-                    <span>Paper</span>
-                  </a>
-                </span>
                 <span class="link-block">
                   <a href="#" class="external-link button is-normal is-rounded is-dark">
                     <span class="icon"><i class="fab fa-github"></i></span>
@@ -301,7 +294,7 @@
                 <span class="demo-label label-model">Model Responses</span>
                 <div class="demo-response">
                   <span class="model-name">Gemini 2.5 Pro</span>
-                  <p>"The last action performed is serving the omelette on a plate."</p>
+                  <p>"The last action performed in the video is serving the omelette on a plate."</p>
                 </div>
                 <div class="demo-response">
                   <span class="model-name">Qwen2.5-VL-72B</span>
@@ -309,7 +302,7 @@
                 </div>
                 <div class="demo-response">
                   <span class="model-name">LLaVA-NeXT-7B</span>
-                  <p>"The last action is to fold the omelette and serve."</p>
+                  <p>"The last action in the video is to fold the omelette and serve."</p>
                 </div>
               </div>
             </div>
@@ -390,6 +383,41 @@
           </div>
         </div>
 
+        <!-- Demo 5: Cross-Frame Integration (animated occlusion) -->
+        <div class="item">
+          <div class="demo-card">
+            <div class="demo-video-wrap">
+              <object data="static/images/fence-scan.svg" type="image/svg+xml" class="demo-svg" aria-label="Person behind moving vertical grates; each frame shows a partial view"></object>
+              <span class="demo-badge badge-purple">Cross-Frame Integration</span>
+            </div>
+            <div class="demo-caption">
+              <div class="demo-prompt">
+                <span class="demo-label">Prompt</span>
+                <p>&ldquo;<strong>Describe this video.</strong> What is happening?&rdquo;</p>
+              </div>
+              <div class="demo-gt">
+                <span class="demo-label label-gt">Ground Truth</span>
+                <p>A person stands still in the scene; moving grates only partially reveal them, so the full figure must be inferred across frames.</p>
+              </div>
+              <div class="demo-responses">
+                <span class="demo-label label-model">Model Responses</span>
+                <div class="demo-response">
+                  <span class="model-name">Gemini 2.5 Pro</span>
+                  <p>&ldquo;The video is too fragmented to identify any clear subject or action.&rdquo;</p>
+                </div>
+                <div class="demo-response">
+                  <span class="model-name">GPT-5-nano</span>
+                  <p>&ldquo;It looks like abstract motion behind bars; I can&rsquo;t tell if a person is present.&rdquo;</p>
+                </div>
+                <div class="demo-response">
+                  <span class="model-name">Qwen2.5-VL-7B</span>
+                  <p>&ldquo;The video is occluded with black masks.&rdquo;</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </section>
@@ -406,19 +434,19 @@
       <div class="failure-modes-list">
 
         <!-- 01 Temporal Expectation Bias -->
-        <div class="failure-mode-row mode-temporal">
+        <div class="failure-mode-row stress-accent-priors">
           <div class="mode-info">
             <div class="mode-header">
               <span class="mode-icon"><i class="fas fa-undo"></i></span>
               <div>
                 <h3 class="mode-title">Temporal Expectation Bias</h3>
-                <p class="mode-question">What happens when visual evidence defies common sense?</p>
               </div>
             </div>
-            <p class="mode-description">
-              Videos with reversed sequences, temporal gaps, or injected anomalies.
-              Scaling helps spatial reasoning (19%&rarr;56%) but <strong>not</strong> temporal (~3% across all scales).
-            </p>
+            <dl class="mode-details">
+              <div class="detail-row"><dt>Task</dt><dd>Can the model recognize events that violate expected temporal order?</dd></div>
+              <div class="detail-row"><dt>Root cause</dt><dd><strong>Pretraining-level</strong> &mdash; learned event schemas are stronger than the visual signal</dd></div>
+              <div class="detail-row"><dt>Signature</dt><dd>Describes the canonical version of events, not what&rsquo;s actually shown</dd></div>
+            </dl>
             <div class="mode-stat" onclick="toggleModeTable(this)">
               <div class="mode-stat-row">
                 <span class="mode-stat-number">97.0%</span>
@@ -453,19 +481,19 @@
         </div>
 
         <!-- 02 Cross-Frame Integration -->
-        <div class="failure-mode-row mode-temporal">
+        <div class="failure-mode-row stress-accent-encoding">
           <div class="mode-info">
             <div class="mode-header">
               <span class="mode-icon"><i class="fas fa-th-large"></i></span>
               <div>
                 <h3 class="mode-title">Cross-Frame Integration</h3>
-                <p class="mode-question">Can the model integrate fragmented visual evidence across time?</p>
               </div>
             </div>
-            <p class="mode-description">
-              Each frame reveals only 25% of the scene. The ViT encoder uses isolated windows with
-              <strong>0.0% cross-frame attention</strong>&mdash;an architectural bottleneck.
-            </p>
+            <dl class="mode-details">
+              <div class="detail-row"><dt>Task</dt><dd>Can the model piece together a scene revealed incrementally across frames?</dd></div>
+              <div class="detail-row"><dt>Root cause</dt><dd><strong>Encoder-level</strong> &mdash; ViT windowed attention produces zero cross-frame signal; frames are processed as isolated snapshots</dd></div>
+              <div class="detail-row"><dt>Signature</dt><dd>Gives up or hallucinates rather than integrating partial evidence across time</dd></div>
+            </dl>
             <div class="mode-stat" onclick="toggleModeTable(this)">
               <div class="mode-stat-row">
                 <span class="mode-stat-number">92%</span>
@@ -499,19 +527,19 @@
         </div>
 
         <!-- 03 Camera Motion Sensitivity -->
-        <div class="failure-mode-row mode-camera">
+        <div class="failure-mode-row stress-accent-camera">
           <div class="mode-info">
             <div class="mode-header">
               <span class="mode-icon"><i class="fas fa-video"></i></span>
               <div>
                 <h3 class="mode-title">Camera Motion Sensitivity</h3>
-                <p class="mode-question">Can the model identify camera-induced perspective shifts?</p>
               </div>
             </div>
-            <p class="mode-description">
-              Models must distinguish camera motion (pan, tilt, zoom) from scene changes.
-              The vision encoder scores only 39.3% on 4-way classification&mdash;an encoding failure, not a reasoning failure.
-            </p>
+            <dl class="mode-details">
+              <div class="detail-row"><dt>Task</dt><dd>Can the model distinguish what the camera is doing from what objects are doing?</dd></div>
+              <div class="detail-row"><dt>Root cause</dt><dd><strong>Encoder-level</strong> &mdash; video encoder captures appearance, not dynamics; motion signals are barely represented</dd></div>
+              <div class="detail-row"><dt>Signature</dt><dd>Confuses camera motion with object motion, or fails entirely on geometric signals</dd></div>
+            </dl>
             <div class="mode-stat" onclick="toggleModeTable(this)">
               <div class="mode-stat-row">
                 <span class="mode-stat-number">98%</span>
@@ -546,19 +574,19 @@
         </div>
 
         <!-- 04 Language-Only Shortcuts -->
-        <div class="failure-mode-row mode-prior">
+        <div class="failure-mode-row stress-accent-priors">
           <div class="mode-info">
             <div class="mode-header">
               <span class="mode-icon"><i class="fas fa-font"></i></span>
               <div>
-                <h3 class="mode-title">Language-Only Shortcuts</h3>
-                <p class="mode-question">Does the model rely on the video or on the prompt&rsquo;s implied answer?</p>
+                <h3 class="mode-title">Language Prior Override</h3>
               </div>
             </div>
-            <p class="mode-description">
-              Prompt held constant across reordered, all-black, and unrelated videos.
-              On blank video models hallucinate answers from prompt cues alone&mdash;KL(real&thinsp;&#8214;&thinsp;noise)&nbsp;=&nbsp;0.10.
-            </p>
+            <dl class="mode-details">
+              <div class="detail-row"><dt>Task</dt><dd>Can the model answer correctly when the prompt itself suggests a wrong answer?</dd></div>
+              <div class="detail-row"><dt>Root cause</dt><dd><strong>Pretraining-level</strong> &mdash; under biased prompts, visual attention halves (70.6%&thinsp;&rarr;&thinsp;35.2%) and output becomes nearly identical whether the model sees real video or a blank screen (KL drops from 4.27 to 0.48)</dd></div>
+              <div class="detail-row"><dt>Signature</dt><dd>Picks the linguistically plausible answer even on blank or shuffled video (55&ndash;68% of errors)</dd></div>
+            </dl>
             <div class="mode-stat" onclick="toggleModeTable(this)">
               <div class="mode-stat-row">
                 <span class="mode-stat-number">100%</span>
@@ -595,19 +623,19 @@
         </div>
 
         <!-- 05 Video Sycophancy -->
-        <div class="failure-mode-row mode-prior">
+        <div class="failure-mode-row stress-accent-priors">
           <div class="mode-info">
             <div class="mode-header">
               <span class="mode-icon"><i class="fas fa-user-check"></i></span>
               <div>
                 <h3 class="mode-title">Video Sycophancy</h3>
-                <p class="mode-question">Can a model prioritize what it <em>sees</em> over what it is <em>told</em>?</p>
               </div>
             </div>
-            <p class="mode-description">
-              Models are given a video alongside a deceptive &ldquo;expert-style&rdquo; claim.
-              Instruction tuning amplifies deference to user language rather than mitigating it.
-            </p>
+            <dl class="mode-details">
+              <div class="detail-row"><dt>Task</dt><dd>Can the model trust what it sees over what it&rsquo;s told?</dd></div>
+              <div class="detail-row"><dt>Root cause</dt><dd><strong>Post-training level</strong> &mdash; preference tuning optimizes for user agreement, overriding visual grounding</dd></div>
+              <div class="detail-row"><dt>Signature</dt><dd>Abandons the correct answer and adopts the user&rsquo;s suggestion regardless of video evidence</dd></div>
+            </dl>
             <div class="mode-stat" onclick="toggleModeTable(this)">
               <div class="mode-stat-row">
                 <span class="mode-stat-number">89.6%</span>
@@ -666,6 +694,7 @@
           <div class="stage-failures">
             <div class="failure-tag tag-red">Camera Motion (39.3%)</div>
             <div class="failure-tag tag-red">Cross-Frame (0% cross-attn)</div>
+            <div class="failure-tag tag-yellow">Temporal signal: 71.3%</div>
           </div>
         </div>
 
@@ -676,9 +705,6 @@
             <div class="stage-icon"><i class="fas fa-exchange-alt"></i></div>
             <h4>Projector</h4>
             <p>Vision &rarr; Language</p>
-          </div>
-          <div class="stage-failures">
-            <div class="failure-tag tag-yellow">Temporal signal: 71.3%</div>
           </div>
         </div>
 
@@ -719,7 +745,7 @@
         </div>
         <div class="insight-card">
           <div class="insight-icon-wrap"><i class="fas fa-graduation-cap"></i></div>
-          <h4>Instruction Tuning Hurts</h4>
+          <h4>Instruction Tuning Amplifies Sycophancy</h4>
           <p>
             Instruction tuning amplifies sycophancy ~3&times; and concentrates visual attention
             suppression in late layers. Video-to-claim attention ratio degrades from 17.7 (Base)
