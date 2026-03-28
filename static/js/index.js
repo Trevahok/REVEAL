@@ -89,6 +89,112 @@ document.addEventListener('DOMContentLoaded', function () {
   // Open the first stat table by default
   var first = document.querySelector('.mode-stat');
   if (first) first.classList.add('open');
+
+  /* ── Ticker: drag-to-scroll + arrow buttons ── */
+  var track = document.querySelector('.ticker-track');
+  var wrap  = document.querySelector('.ticker-wrap');
+  var btnL  = document.querySelector('.ticker-btn-left');
+  var btnR  = document.querySelector('.ticker-btn-right');
+  if (!track || !wrap || !btnL || !btnR) return;
+
+  var ANIM_DURATION = 50; // seconds — must match CSS
+  var STEP_PX = 320;      // pixels shifted per arrow click
+  var isDragging = false;
+  var startX = 0;
+  var startTX = 0;
+  var currentTX = 0;
+
+  function getTranslateX() {
+    var t = window.getComputedStyle(track).transform;
+    if (!t || t === 'none') return 0;
+    var m = t.match(/matrix\(([^)]+)\)/);
+    return m ? parseFloat(m[1].split(', ')[4]) : 0;
+  }
+
+  function halfWidth() {
+    return track.scrollWidth / 2;
+  }
+
+  function wrapTX(x) {
+    var hw = halfWidth();
+    if (x > 0)   x -= hw;
+    if (x < -hw) x += hw;
+    return x;
+  }
+
+  function pauseAndCapture() {
+    currentTX = wrapTX(getTranslateX());
+    track.style.animationName  = 'none';
+    track.style.animationDelay = '0s';
+    track.style.transform      = 'translateX(' + currentTX + 'px)';
+  }
+
+  function resumeAnimation() {
+    currentTX = wrapTX(currentTX);
+    var hw    = halfWidth();
+    var delay = -(Math.abs(currentTX) / hw) * ANIM_DURATION;
+    track.style.transform      = '';
+    track.style.animationDelay = delay + 's';
+    track.style.animationName  = 'ticker-scroll';
+  }
+
+  /* drag */
+  wrap.addEventListener('mousedown', function (e) {
+    isDragging = true;
+    startX  = e.clientX;
+    pauseAndCapture();
+    startTX = currentTX;
+    wrap.classList.add('is-dragging');
+    e.preventDefault();
+  });
+
+  document.addEventListener('mousemove', function (e) {
+    if (!isDragging) return;
+    currentTX = wrapTX(startTX + (e.clientX - startX));
+    track.style.transform = 'translateX(' + currentTX + 'px)';
+  });
+
+  document.addEventListener('mouseup', function () {
+    if (!isDragging) return;
+    isDragging = false;
+    wrap.classList.remove('is-dragging');
+    resumeAnimation();
+  });
+
+  /* touch */
+  wrap.addEventListener('touchstart', function (e) {
+    isDragging = true;
+    startX  = e.touches[0].clientX;
+    pauseAndCapture();
+    startTX = currentTX;
+  }, { passive: true });
+
+  wrap.addEventListener('touchmove', function (e) {
+    if (!isDragging) return;
+    currentTX = wrapTX(startTX + (e.touches[0].clientX - startX));
+    track.style.transform = 'translateX(' + currentTX + 'px)';
+  }, { passive: true });
+
+  wrap.addEventListener('touchend', function () {
+    if (!isDragging) return;
+    isDragging = false;
+    resumeAnimation();
+  });
+
+  /* arrow buttons */
+  function shiftBy(px) {
+    pauseAndCapture();
+    currentTX = wrapTX(currentTX + px);
+    track.style.transition = 'transform 0.35s ease';
+    track.style.transform  = 'translateX(' + currentTX + 'px)';
+    setTimeout(function () {
+      track.style.transition = '';
+      resumeAnimation();
+    }, 370);
+  }
+
+  btnL.addEventListener('click', function () { shiftBy(+STEP_PX); });
+  btnR.addEventListener('click', function () { shiftBy(-STEP_PX); });
 });
 
 /* ── Carousel init (jQuery-dependent) ── */
