@@ -694,7 +694,6 @@
           <div class="stage-failures">
             <div class="failure-tag tag-red">Camera Motion (39.3%)</div>
             <div class="failure-tag tag-red">Cross-Frame (0% cross-attn)</div>
-            <div class="failure-tag tag-yellow">Temporal signal: 71.3%</div>
           </div>
         </div>
 
@@ -702,9 +701,13 @@
 
         <div class="pipeline-stage">
           <div class="stage-box stage-projector">
-            <div class="stage-icon"><i class="fas fa-exchange-alt"></i></div>
-            <h4>Projector</h4>
-            <p>Vision &rarr; Language</p>
+            <div class="stage-icon"><i class="fas fa-database"></i></div>
+            <h4>Pretraining</h4>
+            <p>Learned priors &amp; schemas</p>
+          </div>
+          <div class="stage-failures">
+            <div class="failure-tag tag-orange">Temporal Expectation Bias</div>
+            <div class="failure-tag tag-orange">Language Shortcuts</div>
           </div>
         </div>
 
@@ -712,14 +715,12 @@
 
         <div class="pipeline-stage">
           <div class="stage-box stage-llm">
-            <div class="stage-icon"><i class="fas fa-brain"></i></div>
-            <h4>LLM Layers</h4>
-            <p>Late Layers (15&ndash;27)</p>
+            <div class="stage-icon"><i class="fas fa-sliders-h"></i></div>
+            <h4>Instruction Tuning</h4>
+            <p>RLHF / Preference Tuning</p>
           </div>
           <div class="stage-failures">
-            <div class="failure-tag tag-orange">Sycophancy (3&times; suppression)</div>
-            <div class="failure-tag tag-orange">Temporal Bias (73%&rarr;53%)</div>
-            <div class="failure-tag tag-orange">Language Shortcuts</div>
+            <div class="failure-tag tag-red">Sycophancy (3&times; amplified)</div>
           </div>
         </div>
       </div>
@@ -727,29 +728,32 @@
       <div class="insight-cards">
         <div class="insight-card">
           <div class="insight-icon-wrap"><i class="fas fa-microchip"></i></div>
-          <h4>Encoding-Stage Bottlenecks</h4>
+          <h4>Vision Encoder</h4>
           <p>
-            Camera motion and cross-frame integration failures originate at the vision encoder.
-            Windowed ViT attention isolates each token to 3.1% of the visual input with zero
-            cross-frame attention. <strong>No downstream fix is possible.</strong>
+            Camera motion and cross-frame integration failures originate here.
+            Windowed ViT attention isolates each token to 3.1% of visual input with zero
+            cross-frame attention.
+            <strong>Architectural &mdash; no simple downstream fix.</strong>
           </p>
         </div>
         <div class="insight-card">
-          <div class="insight-icon-wrap"><i class="fas fa-layer-group"></i></div>
-          <h4>Late-Layer Prior Override</h4>
+          <div class="insight-icon-wrap"><i class="fas fa-database"></i></div>
+          <h4>Pretraining</h4>
           <p>
             Temporal direction is encoded at the vision encoder (73.1% probe accuracy) but
-            collapses to near-chance (~53%) by layer 26. The model <strong>has the information
-            and discards it</strong> in favor of learned event schemas.
+            collapses to near-chance (~53%) by late LLM layers &mdash; the model has the information
+            and discards it in favor of learned event schemas.
+            <strong>Learnable &mdash; better data could help.</strong>
           </p>
         </div>
         <div class="insight-card">
-          <div class="insight-icon-wrap"><i class="fas fa-graduation-cap"></i></div>
-          <h4>Instruction Tuning Amplifies Sycophancy</h4>
+          <div class="insight-icon-wrap"><i class="fas fa-sliders-h"></i></div>
+          <h4>Instruction Tuning</h4>
           <p>
-            Instruction tuning amplifies sycophancy ~3&times; and concentrates visual attention
+            Preference tuning amplifies sycophancy ~3&times; and concentrates visual attention
             suppression in late layers. Video-to-claim attention ratio degrades from 17.7 (Base)
             to 3.9 (Instruct) even under neutral prompts.
+            <strong>Actively made worse by RLHF.</strong>
           </p>
         </div>
       </div>
