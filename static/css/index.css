@@ -115,6 +115,28 @@ body {
   font-weight: 800;
 }
 
+.hero-chips {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.5rem;
+  margin-bottom: 1.25rem;
+}
+.hero-chip {
+  display: inline-block;
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.3rem 0.85rem;
+  border-radius: 100px;
+}
+.hero-chip:nth-child(5n+1) { background: var(--pastel-blue); color: var(--re-blue); }
+.hero-chip:nth-child(5n+2) { background: var(--pastel-purple); color: var(--ve-violet); }
+.hero-chip:nth-child(5n+3) { background: var(--pastel-red); color: var(--al-pink); }
+.hero-chip:nth-child(5n+4) { background: var(--pastel-blue); color: var(--re-blue); }
+.hero-chip:nth-child(5n+5) { background: var(--pastel-purple); color: var(--ve-violet); }
+
 .hero-tagline {
   font-size: 1.3rem;
   color: var(--text-secondary);
@@ -137,6 +159,7 @@ body {
   margin-top: 0.35rem;
   margin-bottom: 0.25rem;
   font-weight: 600;
+  font-size: 0.95rem !important;
 }
 .affil { display: inline-block; margin: 0.15rem 0.5rem; }
 .affil-uiuc      { color: #13294B; }
