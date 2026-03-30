@@ -238,3 +238,206 @@ if (typeof jQuery !== 'undefined') {
     }, 100);
   });
 }
+
+/* ── Demo Carousel + Expand Modal ── */
+(function () {
+  function init() {
+    var track        = document.getElementById('demo-track');
+    var prevBtn      = document.getElementById('demo-prev');
+    var nextBtn      = document.getElementById('demo-next');
+    var overlay      = document.getElementById('demo-modal-overlay');
+    var modalContent = document.getElementById('demo-modal-content');
+    var closeBtn     = document.getElementById('demo-modal-close');
+
+    if (!track || !prevBtn || !nextBtn || !overlay || !modalContent || !closeBtn) return;
+
+    var slides = Array.prototype.slice.call(track.querySelectorAll('.demo-slide'));
+    var offset = 0;
+
+    /* inject a .demo-card-header above the video-wrap in each collapsed card:
+       [badge title centred] then [Sample Video chip centred] */
+    slides.forEach(function (slide) {
+      var card  = slide.querySelector('.demo-card');
+      var vwrap = slide.querySelector('.demo-video-wrap');
+      var badge = slide.querySelector('.demo-badge');
+      if (!card || !vwrap) return;
+
+      var header = document.createElement('div');
+      header.className = 'demo-card-header';
+
+      var titleEl = document.createElement('div');
+      /* inherit the badge's colour class (badge-blue / badge-purple / badge-red)
+         so the pill uses the same palette as the original badge */
+      var badgeColourClass = badge ? (badge.className.match(/badge-\w+/) || [])[0] : '';
+      titleEl.className = 'demo-card-title demo-badge ' + (badgeColourClass || '');
+      titleEl.textContent = badge ? badge.textContent.trim() : '';
+
+      var chip = document.createElement('div');
+      chip.className = 'demo-slide-chip';
+      chip.innerHTML = '<i class="fas fa-video"></i> Sample Video';
+
+      header.appendChild(titleEl);
+      header.appendChild(chip);
+      card.insertBefore(header, vwrap);
+    });
+
+    /* use getBoundingClientRect for reliable post-layout dimensions */
+    function slideW() {
+      if (!slides.length) return 300;
+      return slides[0].getBoundingClientRect().width + 16; /* +1rem gap */
+    }
+
+    function viewW() {
+      return track.parentElement.getBoundingClientRect().width;
+    }
+
+    function maxOff() {
+      var total = slides.length * slideW() - 16;
+      return Math.max(0, total - viewW());
+    }
+
+    function applyOffset(val) {
+      var max = maxOff();
+      offset = Math.max(0, Math.min(val, max));
+      track.style.transform = 'translateX(-' + offset + 'px)';
+      prevBtn.disabled = offset <= 0;
+      nextBtn.disabled = max <= 0 || offset >= max - 1;
+    }
+
+    applyOffset(0);
+
+    prevBtn.addEventListener('click', function () { applyOffset(offset - slideW()); });
+    nextBtn.addEventListener('click', function () { applyOffset(offset + slideW()); });
+
+    /* ── Modal open ── */
+    function openModal(slide) {
+      var card  = slide.querySelector('.demo-card');
+      if (!card) return;
+      var clone = card.cloneNode(true);
+
+      /* show caption */
+      var cap = clone.querySelector('.demo-caption');
+      if (cap) { cap.style.cssText = 'display:block !important; font-size:1rem;'; }
+
+      /* prepare video */
+      var vid = clone.querySelector('video');
+      if (vid) {
+        vid.removeAttribute('preload');
+        vid.muted    = true;
+        vid.loop     = true;
+        vid.controls = true;
+      }
+
+      /* hide expand hint */
+      var hint = clone.querySelector('.demo-expand-hint');
+      if (hint) hint.style.display = 'none';
+
+      modalContent.innerHTML = '';
+      modalContent.appendChild(clone);
+
+      /* show overlay */
+      overlay.style.display = 'flex';
+      requestAnimationFrame(function () {
+        overlay.classList.add('is-open');
+      });
+      document.body.style.overflow = 'hidden';
+
+      /* spring-peek: two-phase animation.
+         Phase 1 — slow eased descent to peak (independently timed).
+         Phase 2 — spring physics from rest at peak back to 0,
+                   with elastic floor reflections (unchanged timing). */
+      var box = overlay.querySelector('.demo-modal-box');
+      if (box) {
+        setTimeout(function () {
+          var PEAK          = 220;   /* how far down to reveal (px)      */
+          var DESCENT_MS    = 620;   /* phase 1 duration — tune this     */
+          var stiffness     = 110;   /* phase 2 spring constant          */
+          var drag          = 7;     /* phase 2 damping                  */
+          var restitution   = 0.52;  /* energy kept on each floor bounce */
+
+          /* ease-in-out curve */
+          function eio(t) { return t < 0.5 ? 2*t*t : -1 + (4 - 2*t)*t; }
+
+          /* ── Phase 1: smooth descent ── */
+          var p1Start = null;
+          function phase1(ts) {
+            if (!p1Start) p1Start = ts;
+            var p = Math.min((ts - p1Start) / DESCENT_MS, 1);
+            box.scrollTop = PEAK * eio(p);
+            if (p < 1) { requestAnimationFrame(phase1); return; }
+            /* hand off to spring */
+            phase2();
+          }
+
+          /* ── Phase 2: spring from rest at PEAK → 0 ── */
+          function phase2() {
+            var pos    = PEAK;
+            var vel    = 0;
+            var lastTs = null;
+
+            function physicsStep(ts) {
+              if (!lastTs) { lastTs = ts; requestAnimationFrame(physicsStep); return; }
+              var dt = Math.min((ts - lastTs) / 1000, 0.033);
+              lastTs = ts;
+
+              vel += (-stiffness * pos - drag * vel) * dt;
+              pos += vel * dt;
+
+              if (pos < 0) {
+                pos = 0;
+                if (vel < 0) vel = -vel * restitution;
+              }
+
+              box.scrollTop = pos;
+
+              if (pos > 0.4 || Math.abs(vel) > 2) {
+                requestAnimationFrame(physicsStep);
+              } else {
+                box.scrollTop = 0;
+              }
+            }
+            requestAnimationFrame(physicsStep);
+          }
+
+          requestAnimationFrame(phase1);
+        }, 300);
+      }
+
+      /* play video after insert */
+      var mv = modalContent.querySelector('video');
+      if (mv) {
+        mv.load();
+        mv.play().catch(function () {});
+      }
+    }
+
+    slides.forEach(function (slide) {
+      slide.addEventListener('click', function () { openModal(slide); });
+      slide.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openModal(slide); }
+      });
+    });
+
+    /* ── Modal close ── */
+    function closeModal() {
+      overlay.classList.remove('is-open');
+      document.body.style.overflow = '';
+      var mv = modalContent.querySelector('video');
+      if (mv) mv.pause();
+      setTimeout(function () {
+        overlay.style.display = 'none';
+        modalContent.innerHTML = '';
+      }, 260);
+    }
+
+    closeBtn.addEventListener('click', closeModal);
+    overlay.addEventListener('click', function (e) {
+      if (e.target === overlay) closeModal();
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && overlay.classList.contains('is-open')) closeModal();
+    });
+  }
+
+  window.addEventListener('load', init);
+}());

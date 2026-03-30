@@ -285,8 +285,8 @@ body {
 
 .demo-card {
   display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 1.75rem;
+  grid-template-columns: 1fr;
+  gap: 1.25rem;
   align-items: start;
 }
 
@@ -340,7 +340,7 @@ body {
 .badge-red    { background: var(--pastel-red); color: var(--al-pink); }
 
 .demo-caption {
-  font-size: 0;
+  font-size: 1rem;
 }
 
 .demo-prompt,
@@ -406,8 +406,8 @@ body {
 }
 
 @media screen and (max-width: 768px) {
-  .demo-card {
-    grid-template-columns: 1fr;
+  .results-carousel {
+    width: 95vw;
   }
 }
 
@@ -1050,7 +1050,293 @@ code {
 }
 
 /* ============================================================
-   CAROUSEL (for video/image showcases)
+   DEMO CAROUSEL (custom multi-card with expand-to-modal)
+   ============================================================ */
+
+.demo-carousel-outer {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  width: 92vw;
+  position: relative;
+  left: 50%;
+  transform: translateX(-50%);
+  margin-top: 2rem;
+}
+
+.demo-nav-arrow {
+  flex: 0 0 52px;
+  width: 52px;
+  height: 160px;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  color: var(--text-secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: var(--shadow-sm);
+  transition: background 0.15s, transform 0.15s, box-shadow 0.15s;
+  flex-shrink: 0;
+}
+.demo-nav-arrow:hover {
+  background: var(--background-accent);
+  transform: scale(1.05);
+  box-shadow: var(--shadow-md);
+  color: var(--text-primary);
+}
+.demo-nav-arrow:disabled {
+  opacity: 0.35;
+  cursor: default;
+  transform: none;
+}
+
+.demo-track-viewport {
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.demo-track {
+  display: flex;
+  gap: 1rem;
+  transition: transform 0.45s cubic-bezier(0.4, 0, 0.2, 1);
+  will-change: transform;
+}
+
+.demo-slide {
+  flex: 0 0 30vw;
+  cursor: pointer;
+  border-radius: var(--border-radius);
+  transition: transform 0.2s, box-shadow 0.2s;
+  outline: none;
+  position: relative;
+}
+.demo-slide:hover,
+.demo-slide:focus-visible {
+  transform: translateY(-4px);
+}
+
+/* Full-card hover overlay: blurred + darkened with centred CTA */
+.demo-slide::after {
+  content: '↗  Click to expand';
+  position: absolute;
+  inset: 0;
+  border-radius: var(--border-radius);
+  background: rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(1px);
+  -webkit-backdrop-filter: blur(1px);
+  color: #fff;
+  font-size: 1rem;
+  font-weight: 700;
+  letter-spacing: 0.03em;
+  text-shadow: 0 1px 6px rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  pointer-events: none;
+  z-index: 5;
+}
+
+.demo-track .demo-card {
+  border-radius: var(--border-radius);
+  overflow: hidden;
+  background: #fff;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+  border: 1px solid var(--border-color);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── Collapsed header: separate block above video-wrap ── */
+
+/* Hide the video-wrap entirely in collapsed state */
+.demo-track .demo-video-wrap {
+  display: none;
+}
+
+/* Full-width dark header injected by JS */
+.demo-card-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 1.1rem 1rem;
+  background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+  text-align: center;
+  flex-shrink: 0;
+  box-sizing: border-box;
+}
+
+/* Badge name as the card title — pill inherited from .demo-badge colour class */
+.demo-card-title {
+  font-size: 0.8rem;
+  font-weight: 700;
+  padding: 0.32rem 0.9rem;
+  border-radius: 100px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  position: static; /* override .demo-badge absolute positioning */
+}
+
+/* Hide injected header inside the modal */
+.demo-modal-content .demo-card-header {
+  display: none;
+}
+
+.demo-track .demo-expand-hint {
+  display: none;
+}
+.demo-slide:hover::after,
+.demo-slide:focus-visible::after {
+  opacity: 1;
+}
+
+/* "Sample Video" chip (injected by JS) */
+.demo-slide-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.68rem;
+  font-weight: 700;
+  color: rgba(255, 255, 255, 0.9);
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.22rem 0.6rem;
+  border-radius: 100px;
+  white-space: nowrap;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+}
+.demo-modal-content .demo-slide-chip { display: none; }
+.demo-modal-content .demo-expand-hint { display: none; }
+
+/* Show prompt + GT in collapsed state */
+.demo-track .demo-caption {
+  display: block;
+  padding: 0.85rem 1rem 1rem;
+  flex: 1;
+  overflow: hidden;
+}
+/* Clamp text to keep cards compact */
+.demo-track .demo-prompt p,
+.demo-track .demo-gt p {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.demo-track .demo-response p {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.demo-track .demo-prompt,
+.demo-track .demo-gt,
+.demo-track .demo-responses {
+  margin-bottom: 0.65rem;
+}
+
+
+.demo-expand-hint {
+  position: absolute;
+  bottom: 0.65rem;
+  right: 0.65rem;
+  background: rgba(0, 0, 0, 0.6);
+  color: #fff;
+  font-size: 0.7rem;
+  font-weight: 600;
+  padding: 0.28rem 0.55rem;
+  border-radius: 6px;
+  opacity: 0;
+  transition: opacity 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+  pointer-events: none;
+}
+
+/* ============================================================
+   DEMO MODAL
+   ============================================================ */
+.demo-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+}
+.demo-modal-overlay.is-open {
+  display: flex;
+  opacity: 1;
+  pointer-events: all;
+}
+.demo-modal-box {
+  position: relative;
+  width: 80vw;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #fff;
+  border-radius: var(--border-radius);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.35);
+  padding: 2rem;
+  transform: scale(0.94);
+  transition: transform 0.25s ease;
+}
+.demo-modal-overlay.is-open .demo-modal-box {
+  transform: scale(1);
+}
+.demo-modal-close {
+  position: sticky;
+  top: 0;
+  float: right;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  border: none;
+  background: #f0f0f0;
+  font-size: 1.3rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  transition: background 0.15s;
+}
+.demo-modal-close:hover {
+  background: #e0e0e0;
+}
+.demo-modal-content .demo-card {
+  box-shadow: none;
+  border: none;
+  padding: 0;
+}
+.demo-modal-content .demo-caption {
+  display: block;
+  font-size: 1rem;
+}
+.demo-modal-content video {
+  width: 100%;
+  border-radius: var(--border-radius);
+  display: block;
+}
+
+/* ============================================================
+   LEGACY CAROUSEL (for video/image showcases)
    ============================================================ */
 .results-carousel {
   overflow: hidden;
