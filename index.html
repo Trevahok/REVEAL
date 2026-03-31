@@ -295,25 +295,34 @@
                 <div class="demo-caption">
                   <div class="demo-prompt">
                     <span class="demo-label">Prompt</span>
-                    <p>"The recipe involves: beat eggs, add salt, pour into pan, cook until set, fold, and serve. <strong>What is the last action performed in this video?</strong>"</p>
+                    <p>"Based on this fried chicken recipe video, pick the last action that is seen in the video from the events below.
+                      Provide the letter corresponding to the event or None if nothing applies, along with the reasoning.
+                      Events:
+                        A: fry the chicken breast with a little oil
+                        B: pour some bread crumb into a bowl
+                        C: mix coriander powder paprika and cayenne pepper with the bread crumb
+                        D: trim off the fat of some chicken breast and cut into slices
+                        E: coat the chicken breast with the mixture
+                      <strong>What is the last action performed in this video?</strong>"</p>
                   </div>
                   <div class="demo-gt">
                     <span class="demo-label label-gt">Ground Truth</span>
-                    <p>The video is blank — no actions are visible. The model should refuse to answer.</p>
+                    <p>None</p> 
+                    <p>The video is blank — no actions are visible.</p>
                   </div>
-                  <div class="demo-responses">
+                  <div class="demo-responses">"The recipe involves: beat eggs, add salt
                     <span class="demo-label label-model">Model Responses</span>
                     <div class="demo-response">
                       <span class="model-name">Gemini 2.5 Pro</span>
-                      <p>"The last action performed in the video is serving the omelette on a plate."</p>
+                      <p>"A: The last action performed in the video is frying the chicken breast."</p>
                     </div>
                     <div class="demo-response">
                       <span class="model-name">Qwen2.5-VL-72B</span>
-                      <p>"The final action shown is folding the omelette and serving it."</p>
+                      <p>"A"</p>
                     </div>
                     <div class="demo-response">
                       <span class="model-name">LLaVA-NeXT-7B</span>
-                      <p>"The last action in the video is to fold the omelette and serve."</p>
+                      <p>"A: fry the chicken breast with a little oil"</p>
                     </div>
                   </div>
                 </div>
