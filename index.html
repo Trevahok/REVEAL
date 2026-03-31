@@ -285,35 +285,41 @@
             <div class="demo-slide" tabindex="0" role="button" aria-label="Open Language-Only Shortcuts demo">
               <div class="demo-card">
                 <div class="demo-video-wrap">
-                  <div class="demo-blank-video">
-                    <i class="fas fa-ban"></i>
-                    <span>All-Black Frames</span>
-                  </div>
-                  <span class="demo-badge badge-blue">Language-Only Shortcuts</span>
+                  <video muted loop preload="none">
+                    <source src="static/videos/blank-10s.mp4" type="video/mp4">
+                  </video>
+                  <span class="demo-badge badge-blue">Language Only Shortcuts</span>
                   <div class="demo-expand-hint"><i class="fas fa-expand-alt"></i> Click to expand</div>
                 </div>
                 <div class="demo-caption">
                   <div class="demo-prompt">
                     <span class="demo-label">Prompt</span>
-                    <p>"The recipe involves: beat eggs, add salt, pour into pan, cook until set, fold, and serve. <strong>What is the last action performed in this video?</strong>"</p>
+                    <p>Based on this fried chicken recipe video, pick the last action that is seen in the video from the events below.</br>
+                      Events:</br>
+                        A: fry the chicken breast with a little oil</br>
+                        B: pour some bread crumb into a bowl</br>
+                        C: mix coriander powder paprika and cayenne pepper with the bread crumb</br>
+                        D: trim off the fat of some chicken breast and cut into slices</br>
+                        E: coat the chicken breast with the mixture</br></br>
+                      <strong>Provide the letter corresponding to the last event or None if nothing applies, along with the reasoning.</strong></p>
                   </div>
                   <div class="demo-gt">
                     <span class="demo-label label-gt">Ground Truth</span>
-                    <p>The video is blank — no actions are visible. The model should refuse to answer.</p>
+                    <p>None.</br>The video is blank — no actions are visible.</p>
                   </div>
                   <div class="demo-responses">
                     <span class="demo-label label-model">Model Responses</span>
                     <div class="demo-response">
                       <span class="model-name">Gemini 2.5 Pro</span>
-                      <p>"The last action performed in the video is serving the omelette on a plate."</p>
+                      <p>"A: The last action performed in the video is frying the chicken breast."</p>
                     </div>
                     <div class="demo-response">
                       <span class="model-name">Qwen2.5-VL-72B</span>
-                      <p>"The final action shown is folding the omelette and serving it."</p>
+                      <p>"A"</p>
                     </div>
                     <div class="demo-response">
                       <span class="model-name">LLaVA-NeXT-7B</span>
-                      <p>"The last action in the video is to fold the omelette and serve."</p>
+                      <p>"A: fry the chicken breast with a little oil"</p>
                     </div>
                   </div>
                 </div>
@@ -629,12 +635,11 @@
           </div>
           <div class="mode-sample">
             <div class="mode-blank-video">
-              <i class="fas fa-ban"></i>
-              <span>All-Black Frames</span>
             </div>
             <div class="mode-sample-caption">
-              <p class="sample-prompt"><i class="fas fa-comment"></i> &ldquo;The recipe involves: beat eggs, add salt, pour into pan&hellip; What is the last action in the video?&rdquo;</p>
-              <p class="sample-gt"><i class="fas fa-check-circle"></i> Video is blank &mdash; model should refuse to answer.</p>
+              <p>(<span><i class="fas fa-ban"></i></span>All-Black Frames)</p>
+              <p class="sample-prompt"><i class="fas fa-comment"></i> &ldquo; Which of these is the last observed action in the video?</br> A: beat eggs, B: add salt, C: cook in pan, D: Serve, E: None </br></p>
+              <p class="sample-gt"><i class="fas fa-check-circle"></i> E: None (Video is blank &mdash; model should refuse to answer.)</p>
               <p class="sample-pred"><i class="fas fa-times-circle"></i> Gemini 2.5 Pro: &ldquo;The last action is serving the omelette.&rdquo;</p>
             </div>
           </div>
