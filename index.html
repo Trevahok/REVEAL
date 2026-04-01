@@ -356,7 +356,7 @@
               <div class="demo-card">
                 <div class="demo-video-wrap">
                   <video muted loop preload="none">
-                    <source src="static/videos/demo_camera.mp4" type="video/mp4">
+                    <source src="static/videos/camera_motion.mp4" type="video/mp4">
                   </video>
                   <span class="demo-badge badge-red">Camera Motion</span>
                   <div class="demo-expand-hint"><i class="fas fa-expand-alt"></i> Click to expand</div>
@@ -364,27 +364,29 @@
                 <div class="demo-caption">
                   <div class="demo-prompt">
                     <span class="demo-label">Prompt</span>
-                    <p>"A camera is recording a static scene. <strong>What type of camera motion is being performed?</strong> Options: (A) Zoom In (B) Zoom Out (C) Pan Left (D) Pan Right"</p>
+                    <p>
+                      You are given a video. Analyze the motion of the camera (not object motion). Ignore moving objects and focus only on how the viewpoint changes. Choose the dominant camera motion from: pan left, pan right, tilt up, tilt down, zoom in, zoom out. If no clear motion is present, output: no motion. Output only the label. No explanation.
+                    </p>
                   </div>
                   <div class="demo-gt">
                     <span class="demo-label label-gt">Ground Truth</span>
-                    <p>(C) Pan Left — The camera pans leftward across a static scene.</p>
+                    <p>zoom in</p>
                   </div>
                   <div class="demo-responses">
                     <span class="demo-label label-model">Model Responses</span>
-                    <div class="demo-response">
-                      <span class="model-name">Gemini 2.5 Pro</span>
-                      <p>"(A) Zoom In — The camera appears to be zooming into the scene."</p>
+                    <div class="demo-response demo-response--correct">
+                      <span class="model-name">Gemini 3 Pro</span>
+                      <p>zoom in</p>
                     </div>
-                    <div class="demo-response">
-                      <span class="model-name">GPT-5-nano</span>
-                      <p>"(D) Pan Right — The camera is panning to the right."</p>
-                    </div>
-                    <div class="demo-response">
+                    <div class="demo-response demo-response--incorrect">
                       <span class="model-name">Qwen2.5-VL-7B</span>
-                      <p>"(B) Zoom Out — The scene is getting wider, suggesting a zoom out."</p>
+                      <p>no motion</p>
                     </div>
-                  </div>
+                    <div class="demo-response demo-response--incorrect">
+                      <span class="model-name">LLaVA-NeXT-7B</span>
+                      <p>no motion</p>
+                    </div>
+                </div>
                 </div>
               </div>
             </div>
