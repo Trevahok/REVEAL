@@ -466,6 +466,14 @@ body {
   min-height: 140px;
   object-fit: cover;
 }
+.mode-sample video.mode-demo-video {
+  width: 100%;
+  min-height: 200px;
+  border-radius: var(--border-radius);
+  background: #000;
+  max-height: min(360px, 50vh);
+  object-fit: contain;
+}
 .mode-svg {
   display: block;
   height: auto;
@@ -505,6 +513,9 @@ body {
 .sample-gt i { color: #16a34a; }
 .sample-pred { color: #dc2626; font-weight: 500; }
 .sample-pred i { color: #dc2626; }
+.mode-sample-caption p.sample-pred-multiline {
+  display: block;
+}
 
 .mode-header {
   display: flex;
@@ -1155,7 +1166,7 @@ code {
 
 /* ── Collapsed header: separate block above video-wrap ── */
 
-/* Hide the video-wrap entirely in collapsed state */
+/* Hide video/placeholder in collapsed carousel — open modal to watch */
 .demo-track .demo-video-wrap {
   display: none;
 }
