@@ -405,6 +405,28 @@ body {
   font-style: italic;
 }
 
+.demo-response--correct {
+  background: #dcfce7;
+  border-color: #86efac;
+}
+.demo-response--correct .model-name {
+  color: #15803d;
+}
+.demo-response--correct p {
+  color: #15803d;
+}
+
+.demo-response--incorrect {
+  background: #fee2e2;
+  border-color: #fecaca;
+}
+.demo-response--incorrect .model-name {
+  color: #b91c1c;
+}
+.demo-response--incorrect p {
+  color: #b91c1c;
+}
+
 @media screen and (max-width: 768px) {
   .results-carousel {
     width: 95vw;
